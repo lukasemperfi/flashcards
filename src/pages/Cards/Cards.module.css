@@ -1,0 +1,57 @@
+.header {
+	padding: 30px 30px 20px 30px;
+	height: auto;
+	background: white;
+	line-height: 1.5;
+	/* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+	/* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+	box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+	border-radius: 6px;
+}
+
+.headerTop {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.headerTitle {
+	color: rgba(0,0,0,.85);
+    font-weight: 600;
+    font-size: 38px;
+    line-height: 1.23;
+	margin: 0;
+}
+
+.headerRow {
+	display: flex;
+	flex-direction: column;
+}
+
+
+.headerResult {
+	align-self: flex-end;
+	padding-right: calc(2em + 23px);
+}
+
+.headerResult>div>div {
+	margin-bottom: -5px;
+}
+
+.headerResult span {
+	font-size: 21px;
+}
+
+.headerProgressBar span {
+	font-size: 21px;
+}
+
+.headerProgressBar>div>div>div>div {
+	padding-bottom: 15px;
+}
+
+.headerRow .headerProgressBar>div>div {
+	margin-right: calc(-2em - 23px);
+	padding-right: calc(2em + 23px);
+}
