@@ -1,30 +1,32 @@
 import React from 'react';
 import classes from './Cards.module.css'
-import { Layout, Progress, Statistic, Typography, Button } from 'antd';
+import { Layout, Progress, Statistic, Typography, Button, Input, Space } from 'antd';
+import { AudioOutlined } from '@ant-design/icons';
+import { CardsTable } from '../../components/CardsTable/CardsTable';
+import { CardIdPage } from '../CardIdPage/CardIdPage';
+import { CardsNav } from '../../components/CardsNav/CardsNav';
+import { CardsStatistic } from '../../components/CardsStatistic/CardsStatistic';
+import { NewCard } from '../../components/NewCard/NewCard';
+import { Quiz } from '../../components/Quiz/Quiz';
 const { Header, Content } = Layout;
 const { Title } = Typography;
+const { Search } = Input;
 
 
 export const Cards = () => {
 
 	return (
 		<>
-			<Header className={classes.header}>
-				<div className={classes.headerRow}>
-					<div className={classes.headerTop}>
-						<h1 className={classes.headerTitle}>JavaScript</h1>
-						<Button type="primary" >Начать повторение</Button>
-					</div>
-					<div className={classes.headerResult}>
-						{/* <span>7/10</span> */}
-						<Statistic title="Карточки" value={93} suffix="/ 100" />
-					</div>
-					<div className={classes.headerProgressBar}>
-						<Progress size='big' percent={10} />
-					</div>
-				</div>
-			</Header>
-			<Content>Content</Content>
+			{/* <Header className={classes.header}>
+				<CardsStatistic />
+			</Header> 
+			<Content className={classes.content}>
+				 <CardsNav />
+				 <CardsTable /> 
+				<CardIdPage/>
+				<NewCard/>
+			 </Content> */}
+			<Quiz/>
 		</>
 	);
 };

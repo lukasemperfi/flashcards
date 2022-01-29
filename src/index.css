@@ -18,9 +18,8 @@ code {
 	overflow: hidden;
 }
 
-/* .container {
-	max-width: 1824px;
-    padding: 10px 3px 0px;
-    margin: auto;
-} */
+.containerCard {
+	margin: 0 auto;
+    max-width: 770px;
+}
 

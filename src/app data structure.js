@@ -38,5 +38,5 @@ const structure = [
 				}
 			}
 		]
-	}
+	},
 ]

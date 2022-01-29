@@ -1,0 +1,44 @@
+.quiz {
+	background: rgb(240, 242, 245);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+	margin: 12vh auto 0px auto;
+    max-width: 770px;
+	padding: 10px;
+	width: 100%;
+}
+
+.cardHeader, .cardBody {
+	padding: 20px;
+	margin-bottom: 20px;
+    background: white;
+    line-height: 1.5;
+    box-shadow: rgb(50 50 93 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px;
+    border-radius: 6px;
+}
+
+.cardTitle {
+	margin-bottom: 20px;
+}
+
+.cardBtns {
+	display: flex;
+    justify-content: center;
+}
+
+.card .cardBody .panel > div {
+	padding: 0;
+}
+
+.card .cardBody .panel > div > div {
+	padding: 0;
+}

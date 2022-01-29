@@ -40,7 +40,7 @@ export const MainLayout = () => {
 				<Navbar />
 			</Sider>
 			<Layout className={classes.content} >
-				<Cards/>
+				<Cards/>			
 			</Layout>
 		</Layout>
 	)

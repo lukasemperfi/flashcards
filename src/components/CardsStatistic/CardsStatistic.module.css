@@ -1,0 +1,46 @@
+.statistic {
+	display: flex;
+	flex-direction: column;
+}
+
+.statisticHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.statisticTitle {
+	color: rgba(0,0,0,.85);
+    font-weight: 600;
+    font-size: 38px;
+    line-height: 1.23;
+	margin: 0;
+}
+
+.statisticResult {
+	align-self: flex-end;
+	padding-right: calc(2em + 23px);
+}
+
+.statisticResult>div>div {
+	margin-bottom: -5px;
+}
+
+.statisticResult span {
+	font-size: 21px;
+}
+
+.statisticProgressBar span {
+	font-size: 21px;
+}
+
+.statisticProgressBar>div>div>div>div {
+	padding-bottom: 15px;
+}
+
+.statistic .statisticProgressBar>div>div {
+	margin-right: calc(-2em - 23px);
+	padding-right: calc(2em + 23px);
+}
+
