@@ -17,16 +17,16 @@ export const Cards = () => {
 
 	return (
 		<>
-			{/* <Header className={classes.header}>
+			<Header className={classes.header}>
 				<CardsStatistic />
-			</Header> 
+			</Header>
 			<Content className={classes.content}>
-				 <CardsNav />
-				 <CardsTable /> 
-				<CardIdPage/>
-				<NewCard/>
-			 </Content> */}
-			<Quiz/>
+				<CardsNav />
+				<CardsTable />
+				{/* <CardIdPage /> */}
+				{/* <NewCard /> */}
+			</Content>
+			{/* <Quiz/> */}
 		</>
 	);
 };

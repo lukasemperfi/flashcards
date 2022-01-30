@@ -84,7 +84,8 @@ return (
 		columns={columns}
 		dataSource={data}
 		size='small'
-		pagination={{ position: ['topRight', 'bottomRight'], simple: 'true' }}
+		scroll={{ x: 615}}
+		pagination={{ position: ['bottomCenter'] }}
 	/>
 );
 };

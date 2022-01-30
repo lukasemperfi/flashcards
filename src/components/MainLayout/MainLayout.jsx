@@ -15,7 +15,7 @@ const { Sider } = Layout;
 export const MainLayout = () => {
 	const [collapsed, setCollapsed] = useState(false);
 
-	const onCollapse = () => {
+	const onCollapse = (cb) => {
 		setCollapsed(prev => !prev)
 	};
 
@@ -24,23 +24,26 @@ export const MainLayout = () => {
 		<Layout hasSider>
 			<Sider
 				className={classes.sidebar}
-				trigger={null}
-				collapsedWidth={0}
+				// trigger={null}
+				collapsedWidth={60}
 				collapsible
 				collapsed={collapsed}
+				onCollapse={onCollapse}
 				width={300}
 			>
-				<Button 
+				{/* <Button 
 				className={classes.menuBtn}
 				type="text"
 				size='large' 
 				icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined /> }
 				onClick={onCollapse}
-				/>
-				<Navbar />
+				/> */}
+				<Navbar collapsed={collapsed}  />
 			</Sider>
 			<Layout className={classes.content} >
-				<Cards/>			
+				<div className={classes.wrapper}>
+						<Cards/>
+				</div>		  
 			</Layout>
 		</Layout>
 	)

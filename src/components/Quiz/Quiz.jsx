@@ -18,7 +18,7 @@ export const Quiz = () => {
 				<div className={classes.card}>
 					<div className={classes.cardHeader}>
 						<div className={classes.cardTitle}>
-						<Title level={2}>Lorem ipsum dolor sit amet consectetur adipisicing elit?</Title>
+					Lorem ipsum dolor sit amet consectetur adipisicing elit?
 						</div>
 						<div className={classes.cardBtns}>
 							<Space>
@@ -28,10 +28,10 @@ export const Quiz = () => {
 						</div>
 					</div>
 					<div className={classes.cardBody}>
-						<Collapse bordered={false} ghost={true} onChange={() => setIsCollapseOpen(!isCollapseOpen)} expandIcon={(props) => console.log(props)}>
-							<Panel header={collapseHeader} key="1" className={classes.panel}>
-								<Typography>
-									<Paragraph>
+						<Collapse bordered={false} ghost={true} onChange={() => setIsCollapseOpen(!isCollapseOpen)}>
+							<Panel header={collapseHeader} key="1" className={classes.panel} showArrow={false}>
+						
+									<p>
 										Lorem ipsum dolor sit amet consectetur adipisicing elit.
 										Totam ex consectetur, blanditiis hic dignissimos, nesciunt
 										eveniet repellat distinctio laborum fugiat rerum mollitia
@@ -56,8 +56,8 @@ export const Quiz = () => {
 										Totam ex consectetur, blanditiis hic dignissimos, nesciunt
 										eveniet repellat distinctio laborum fugiat rerum mollitia
 										debitis deserunt minus est, ullam eaque animi accusamus.
-									</Paragraph>
-								</Typography>
+									</p>
+								
 							</Panel>
 						</Collapse>
 					</div>
