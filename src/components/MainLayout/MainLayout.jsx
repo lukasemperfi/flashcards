@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import classes from './MainLayout.module.css'
-import { Layout, Button  } from 'antd';
+import { Layout, Button } from 'antd';
 import { Navbar } from '../Navbar/Navbar';
+import SimpleBar from 'simplebar-react';
 import {
 	MenuUnfoldOutlined,
 	MenuFoldOutlined,
-  } from '@ant-design/icons';
-import { Cards } from '../../pages/Cards/Cards';
+} from '@ant-design/icons';
+import { Cards } from '../../pages/CardSetIdPage/CardSetIdPage';
+import { Outlet } from 'react-router-dom';
 const { Sider } = Layout;
 
 
@@ -24,26 +26,21 @@ export const MainLayout = () => {
 		<Layout hasSider>
 			<Sider
 				className={classes.sidebar}
-				// trigger={null}
 				collapsedWidth={60}
 				collapsible
 				collapsed={collapsed}
 				onCollapse={onCollapse}
 				width={300}
 			>
-				{/* <Button 
-				className={classes.menuBtn}
-				type="text"
-				size='large' 
-				icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined /> }
-				onClick={onCollapse}
-				/> */}
-				<Navbar collapsed={collapsed}  />
+				<Navbar collapsed={collapsed} />
 			</Sider>
 			<Layout className={classes.content} >
-				<div className={classes.wrapper}>
-						<Cards/>
-				</div>		  
+				<SimpleBar style={{ maxHeight: '100vh' }}>
+					<div className={classes.wrapper}>
+						{/* <Cards /> */}
+						<Outlet/> 
+					</div>
+				</SimpleBar>
 			</Layout>
 		</Layout>
 	)

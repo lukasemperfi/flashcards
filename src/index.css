@@ -2,13 +2,22 @@ body {
 	margin: 0;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	overflow-y: scroll;
+	overflow-y: hidden;
 }
 
 
 #root {
 	min-height: 100vh;
 	overflow: hidden;
+}
+
+:root {
+	--bc-green: #008f26;
+	--bc-green-light: #00a82d;
+	--bc-gray-light: #dddddd;
+	--bc-gray-lighter: #ebebeb;
+	--c-gray: #4e4e51;
+	--c-white: #ffffff;
 }
 
 .containerCard {
@@ -23,3 +32,7 @@ body {
 .ck-content .page-break__label {
 	color: red;
 }
+
+.simplebar-scrollbar::before {
+	background-color: #b3b3b4;
+  }

@@ -1,49 +1,8 @@
-// Card
-const card = {
-	id: C1,
-	question: 'Какие бывают типы данных в JS ?',
-	answer: 'number, string, object, boolean, null, undefined, bigint, symbol',
-	tags: ['data', 'string'],
-	statistics: {
-		repeat: 10,
-		correct: 7,
-		notCorrect: 3
-	}
-}
-
-// List
-const list = [
-	{
-		id: 1,
-		title: 'JavaScript',
-		cards: []
-	}
-]
-
-// Structure
-const structure = [
-	{
-		id: 1,
-		title: 'JavaScript',
-		cards: [
-			{
-				id: C1,
-				question: 'Какие бывают типы данных в JS ?',
-				answer: 'number, string, object, boolean, null, undefined, bigint, symbol',
-				tags: ['data', 'string'],
-				statistics: {
-					repeat: 10,
-					correct: 7,
-					notCorrect: 3
-				}
-			}
-		]
-	},
-]
+import { createSlice, nanoid } from '@reduxjs/toolkit'
 
 const initialValue = [
 	{
-		id: 1,
+		id: '1',
 		title: 'JavaScript',
 		cards: [
 			{
@@ -63,9 +22,9 @@ const initialValue = [
 				answer: 'React.PureComponentточно такой же, как React.Componentза исключением того, что он обрабатывает shouldComponentUpdate()метод для вас. При изменении реквизита или состояния PureComponent будет выполнять поверхностное сравнение как реквизита, так и состояния. Компонент , с другой стороны, не будет сравнивать текущие реквизиты и состояние со следующими из коробки. Таким образом, компонент будет перерисовываться по умолчанию всякий раз , когда shouldComponentUpdateвызывается.',
 				tags: ['number',],
 				statistics: {
-					repeat: 3,
-					correct: 1,
-					notCorrect: 2
+					repeat: 4,
+					correct: 4,
+					notCorrect: 0
 				}
 			},
 			{
@@ -78,11 +37,22 @@ const initialValue = [
 					correct: 56,
 					notCorrect: 44
 				}
+			},
+			{
+				id: 'C4',
+				question: 'Когда использовать  компонента?',
+				answer: 'Если комнт класса, в противном случае используйте компонент функции. Однако, начиная с React 16.8 с добавлением хуков, вы можете использовать состояние, методы жизненного цикла и другие функции, которые были доступны только в компоненте класса, прямо в компоненте функции.',
+				tags: [],
+				statistics: {
+					repeat: 6,
+					correct: 6,
+					notCorrect: 0
+				}
 			}
 		]
 	},
 	{
-		id: 2,
+		id: '2',
 		title: 'React',
 		cards: [
 			{
@@ -99,8 +69,39 @@ const initialValue = [
 		]
 	},
 	{
-		id: 3,
+		id: '3',
 		title: 'NodeJS',
 		cards: []
 	},
 ]
+
+const cardSetsSlice = createSlice({
+	name: 'cardSets',
+	initialState: {
+		cardSets: initialValue,
+	},
+	reducers: {
+		addCardSet: {
+			reducer: (state, action) => {
+				state.cardSets.push(action.payload)
+			},
+			prepare: ({ title }) => {
+				const id = nanoid()
+				return {
+					payload: {
+						id,
+						title,
+						cards: [],
+					}
+				}
+			},
+		},
+		deleteCardSet(state, action) {
+			state.cardSets = state.cardSets.filter(cardSet => cardSet.id !== action.payload.id)
+		},
+	}
+})
+
+export const { addCardSet, deleteCardSet } = cardSetsSlice.actions
+
+export default cardSetsSlice.reducer

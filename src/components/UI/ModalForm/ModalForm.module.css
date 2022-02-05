@@ -1,0 +1,76 @@
+.wrapper {
+	position: absolute;
+	top: 0;
+	z-index: 100;
+	visibility: hidden;
+	opacity: 0;
+	transition: .1s;
+	background: transparent;
+	min-width: 100%;
+}
+
+.modalForm {
+	background: white;
+	padding: 10px;
+	width: 100%;
+	border-radius: 12px;
+	box-shadow: rgb(0 21 41 / 30%) 0px 0px 1px 0px, rgb(0 21 41 / 50%) 0px 1px 5px 1px;
+}
+
+.modalForm>input {
+	margin-bottom: 10px;
+}
+
+.modalFormBtns {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+}
+
+.modalFormBtns>button:last-child {
+	margin-left: 10px;
+}
+
+.modalFormBack {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: transparent;
+	/* background: red; */
+	height: 100vh;
+	width: 100vw;
+	z-index: -1;
+
+}
+
+.active {
+	visibility: visible;
+	opacity: 1;
+	transition: .1s;
+}
+
+.canselBtn {
+	color: var(--c-gray);
+	background-color: var(--bc-gray-lighter);
+	border-color: var(--bc-gray-lighter);
+}
+
+.canselBtn:hover, .canselBtn:active, .canselBtn:focus {
+	color: var(--c-gray);
+	background-color: var(--bc-gray-light);
+	border-color: var(--bc-gray-light);
+}
+
+.confirmBtn {
+	background-color: var(--bc-green-light);
+	color: var(--c-white);
+	border-color: var(--bc-green-light);
+}
+
+.confirmBtn:hover, .confirmBtn:active, .confirmBtn:focus {
+	background-color: var(--bc-green);
+	border-color: var(--bc-green);
+	color: var(--c-white);
+}

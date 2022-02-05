@@ -1,80 +1,58 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Input, Menu, Tooltip } from 'antd';
+import React, { useState } from 'react';
+import { Menu, Empty } from 'antd';
 import classes from './Navbar.module.css'
 import cn from 'classnames'
+import { useSelector } from 'react-redux';
+import SimpleBar from 'simplebar-react';
+import { CollapsedButton } from '../UI/CollapsedButton/CollapsedButton';
+import { CollapsedInput } from '../UI/CollapsedInput/CollapsedInput';
+import { DatabaseOutlined } from '@ant-design/icons';
+import { CardsSetAdd } from '../CardsSetAdd/CardsSetAdd';
 
-import { PlusOutlined, DatabaseOutlined, SearchOutlined } from '@ant-design/icons';
+import { selectCardSets, selectSearchedCardSets } from '../../store/selectors';
+import { CardsMenu } from '../CardsMenu/CardsMenu';
+
 
 export const Navbar = ({ collapsed }) => {
-	const [visibleSearch, setVisibleSearch] = useState(false)
-	const onSearch = value => console.log(value);
+	const [search, setSearch] = useState('')
+	const cardsSet = useSelector(state => selectSearchedCardSets(state, search))
 
-	const showSearch = (event) => {
-		if (collapsed) {
-			setVisibleSearch(prev => !prev)
-		}
+	const searchOnChange = (event) => {
+		setSearch(event.target.value)
 	}
 
-	useEffect(() => {
-		console.log('collapsed render');
-		setVisibleSearch(false)
-	}, [collapsed])
+	const testData = Array(30).fill(1)
+	const description = <span style={{ color: '#ffffff' }}>Нажмите 'Создать', <br /> чтобы создать набор карточек</span>
 
 	return (
-		<>
+		<div className={classes.navbar}>
 			<div className={classes.navbarTop}>
-				<div className={cn(classes.search, {
-								[classes.hidenSearchFocus]: visibleSearch,
-							})}
-							>
-					<input
-						className={cn(classes.searchInput, {
-							[classes.collapsed]: collapsed,
-							[classes.showSearch]: visibleSearch,
-						})}
-						placeholder="Поиск"
-						onChange={onSearch}
+				<div className={classes.navbarTopCol}>
+					<CollapsedInput
+						collapsed={collapsed}
+						inputValue={search}
+						inputOnChange={searchOnChange}
 					/>
-					<Tooltip placement="rightTop" title={'Поиск'} >
-						<Button
-							onClick={showSearch}
-							className={cn(classes.searchBtn, {
-								[classes.showSearchBtn]: visibleSearch,
-							})}
-							icon={<SearchOutlined className={classes.searchIcon} />}
-						/>
-					</Tooltip>
 				</div>
-				<Tooltip placement="rightTop" title={'Добавить'} >
-					<Button
-						type='primary'
-						className={classes.addBtn}
-						icon={<PlusOutlined className={classes.addBtnIcon} />}
-					>
-						<div
-							className={cn(classes.addBtnText, {
-								[classes.collapsed]: collapsed,
-							})}
-						>
-							Создать
-						</div>
-					</Button>
-				</Tooltip>
+				<div className={classes.navbarTopCol}>
+					<CardsSetAdd
+						showBtn={<CollapsedButton collapsed={collapsed} />}
+					/>
+				</div>
 			</div>
-			<Menu
-				className={classes.menu}
-				theme="dark"
-				defaultSelectedKeys={['1']}
-				mode="inline"
-			>
-				{Array(30).fill(1).map((el, i) => {
-					return (
-						<Menu.Item key={i} icon={<DatabaseOutlined />}>
-							nav more text bla test yoxu {i}
-						</Menu.Item>
-					)
-				})}
-			</Menu>
-		</>
+			<SimpleBar style={{ maxHeight: 'calc(100% - 150px)' }}>
+				{testData.length
+					?
+					<CardsMenu data={cardsSet} />
+					:
+					(!collapsed && <Empty
+						image={Empty.PRESENTED_IMAGE_SIMPLE}
+						description={description}
+					/>)
+				}
+			</SimpleBar>
+		</div>
 	);
 };
+
+
