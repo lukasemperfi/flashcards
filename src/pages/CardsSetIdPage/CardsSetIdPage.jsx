@@ -1,11 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import classes from './CardSetIdPage.module.css'
+import classes from './CardsSetIdPage.module.css'
 import { Layout, Progress, Menu, Typography, Button, Input, Dropdown } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
-import { CardsTable } from '../../components/CardsTable/CardsTable';
+import { CardsSetTable } from '../../components/CardsSetTable/CardsSetTable';
 import { CardIdPage } from '../CardIdPage/CardIdPage';
-import { CardsNav } from '../../components/CardsNav/CardsNav';
-import { CardsStatistic } from '../../components/CardsStatistic/CardsStatistic';
+import { CardsSetNav } from '../../components/CardsSetNav/CardsSetNav';
+import { CardsSetStatistic } from '../../components/CardsSetStatistic/CardsSetStatistic';
 import { NewCard } from '../../components/NewCard/NewCard';
 import { Quiz } from '../../components/Quiz/Quiz';
 import { useParams } from 'react-router-dom';
@@ -21,7 +21,7 @@ const { Title } = Typography;
 const { Search } = Input;
 
 
-export const CardSetIdPage = () => {
+export const CardsSetIdPage = () => {
 	const dispatch = useDispatch()
 	const { cardSetId } = useParams()
 	const cardSet = useSelector(state => selectCardSetById(state, cardSetId))
@@ -98,7 +98,7 @@ export const CardSetIdPage = () => {
 			{!emptyCardSet &&
 				(<>
 					<Header className={classes.header}>
-						<CardsStatistic
+						<CardsSetStatistic
 							title={title}
 							cardsNumber={cards.length}
 							cardsDone={cardsDone}
@@ -123,13 +123,13 @@ export const CardSetIdPage = () => {
 							:
 							(
 								<>
-									<CardsNav
+									<CardsSetNav
 										disabledBtn={selectedRowKeys.length === 0}
 										addCards={addCardsKitFromCardsList}
 										deleteCards={deleteCardsFromCardsKit}
 										setIsCreateCardOpen={setIsCreateCardOpen}
 									/>
-									<CardsTable
+									<CardsSetTable
 										data={tableData}
 										progressBarColor={progressBarColor}
 										rowSelection={rowSelection}

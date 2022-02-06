@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { addSet } from '../../store/cardSetsSlice';
 
 import { selectCardSets, selectSearchedCardSets } from '../../store/selectors';
-import { CardsMenu } from '../CardsMenu/CardsMenu';
+import { CardsSetMenu } from '../CardsSetMenu/CardsSetMenu';
 
 
 export const Navbar = ({ collapsed }) => {
@@ -51,7 +51,7 @@ export const Navbar = ({ collapsed }) => {
 			<SimpleBar style={{ maxHeight: 'calc(100% - 150px)' }}>
 				{testData.length
 					?
-					<CardsMenu data={cardsSet} />
+					<CardsSetMenu data={cardsSet} />
 					:
 					(!collapsed && <Empty
 						image={Empty.PRESENTED_IMAGE_SIMPLE}

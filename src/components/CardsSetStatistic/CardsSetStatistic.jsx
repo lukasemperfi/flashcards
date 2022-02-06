@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './CardsStatistic.module.css'
+import classes from './CardsSetStatistic.module.css'
 import { Progress, Statistic, Button, } from 'antd';
 
-export const CardsStatistic = ({ title, cardsNumber, cardsDone, progressBarColor }) => {
+export const CardsSetStatistic = ({ title, cardsNumber, cardsDone, progressBarColor }) => {
 	const percent = Math.round((cardsDone * 100) / cardsNumber)
 
 	return (

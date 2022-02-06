@@ -1,10 +1,10 @@
 import React from 'react';
 import { Menu } from 'antd';
 import { DatabaseOutlined } from '@ant-design/icons';
-import classes from './CardsMenu.module.css'
+import classes from './CardsSetMenu.module.css'
 import { Link } from 'react-router-dom';
 
-export const CardsMenu = ({ data }) => {
+export const CardsSetMenu = ({ data }) => {
 	return (
 		<Menu
 			className={classes.menu}

@@ -1,7 +1,7 @@
 import { Routes, Route, Link } from 'react-router-dom';
 
 import React from 'react';
-import { CardSetIdPage } from '../pages/CardSetIdPage/CardSetIdPage';
+import { CardsSetIdPage } from '../pages/CardsSetIdPage/CardsSetIdPage';
 import { NotFound } from '../pages/NotFound';
 import { CardIdPage } from '../pages/CardIdPage/CardIdPage';
 import { MainLayout } from '../components/MainLayout/MainLayout';
@@ -12,7 +12,7 @@ export const AppRouter = () => {
 		<Routes>
 			<Route path='/' element={<MainLayout />}>
 				<Route index element={<WelcomePage />} />
-				<Route path=':cardSetId' element={<CardSetIdPage />} />
+				<Route path=':cardSetId' element={<CardsSetIdPage />} />
 				<Route path='*' element={<NotFound />} />
 			</Route>
 		</Routes>

@@ -7,7 +7,6 @@ import {
 	MenuUnfoldOutlined,
 	MenuFoldOutlined,
 } from '@ant-design/icons';
-import { Cards } from '../../pages/CardSetIdPage/CardSetIdPage';
 import { Outlet } from 'react-router-dom';
 const { Sider } = Layout;
 
@@ -37,7 +36,6 @@ export const MainLayout = () => {
 			<Layout className={classes.content} >
 				<SimpleBar style={{ maxHeight: '100vh' }}>
 					<div className={classes.wrapper}>
-						{/* <Cards /> */}
 						<Outlet/> 
 					</div>
 				</SimpleBar>

@@ -1,5 +1,5 @@
 import React from 'react';
-import classes from './CardsNav.module.css'
+import classes from './CardsSetNav.module.css'
 import { Button, Space, Input, Dropdown } from 'antd';
 import { ModalForm } from '../UI/ModalForm/ModalForm';
 import { CardsSetAdd } from '../CardsSetAdd/CardsSetAdd';
@@ -8,7 +8,7 @@ import { CardsSetAdd } from '../CardsSetAdd/CardsSetAdd';
 
 const { Search } = Input;
 
-export const CardsNav = ({ disabledBtn, addCards, deleteCards, setIsCreateCardOpen }) => {
+export const CardsSetNav = ({ disabledBtn, addCards, deleteCards, setIsCreateCardOpen }) => {
 
 
 	return (

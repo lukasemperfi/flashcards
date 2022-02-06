@@ -5,7 +5,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 
-export const CardsTable = ({ data, progressBarColor, rowSelection }) => {
+export const CardsSetTable = ({ data, progressBarColor, rowSelection }) => {
 
 
 	const columns = [
