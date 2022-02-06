@@ -81,7 +81,7 @@ const cardSetsSlice = createSlice({
 		cardSets: initialValue,
 	},
 	reducers: {
-		addCardSet: {
+		addSet: {
 			reducer: (state, action) => {
 				state.cardSets.push(action.payload)
 			},
@@ -96,12 +96,42 @@ const cardSetsSlice = createSlice({
 				}
 			},
 		},
-		deleteCardSet(state, action) {
-			state.cardSets = state.cardSets.filter(cardSet => cardSet.id !== action.payload.id)
+		addSetFromCardsList: {
+			reducer: (state, action) => {
+				state.cardSets.push(action.payload)
+			},
+			prepare: ({ title, cards }) => {
+				const id = nanoid()
+				return {
+					payload: {
+						id,
+						title,
+						cards: cards || [],
+					}
+				}
+			},
 		},
+		deleteSet(state, action) {
+			state.cardSets = state.cardSets.filter(set => set.id !== action.payload.id)
+		},
+		addCard(state, action) {
+			const { kitId, card } = action.payload
+			const existingSet = state.cardSets.find(set => set.id === kitId)
+			if (existingSet) {
+				existingSet.cards.push(card)
+			}
+		},
+		deleteCardsFromSet(state, action) {
+			const { kitId, cardsId } = action.payload
+			const existingSet = state.cardSets.find(set => set.id === kitId)
+			if (existingSet) {
+				existingSet.cards = existingSet.cards.filter(card => !cardsId.some(id => id === card.id))
+			}
+		},
+
 	}
 })
 
-export const { addCardSet, deleteCardSet } = cardSetsSlice.actions
+export const { addSet, deleteSet, addSetFromCardsList, deleteCardsFromSet, addCard } = cardSetsSlice.actions
 
 export default cardSetsSlice.reducer

@@ -8,6 +8,8 @@ import { CollapsedButton } from '../UI/CollapsedButton/CollapsedButton';
 import { CollapsedInput } from '../UI/CollapsedInput/CollapsedInput';
 import { DatabaseOutlined } from '@ant-design/icons';
 import { CardsSetAdd } from '../CardsSetAdd/CardsSetAdd';
+import { useDispatch } from 'react-redux';
+import { addSet } from '../../store/cardSetsSlice';
 
 import { selectCardSets, selectSearchedCardSets } from '../../store/selectors';
 import { CardsMenu } from '../CardsMenu/CardsMenu';
@@ -16,9 +18,14 @@ import { CardsMenu } from '../CardsMenu/CardsMenu';
 export const Navbar = ({ collapsed }) => {
 	const [search, setSearch] = useState('')
 	const cardsSet = useSelector(state => selectSearchedCardSets(state, search))
+	const dispatch = useDispatch()
 
 	const searchOnChange = (event) => {
 		setSearch(event.target.value)
+	}
+
+	const addCardsKit = (title) => {
+		dispatch(addSet({ title }))
 	}
 
 	const testData = Array(30).fill(1)
@@ -37,6 +44,7 @@ export const Navbar = ({ collapsed }) => {
 				<div className={classes.navbarTopCol}>
 					<CardsSetAdd
 						showBtn={<CollapsedButton collapsed={collapsed} />}
+						addCardsSet={addCardsKit}
 					/>
 				</div>
 			</div>

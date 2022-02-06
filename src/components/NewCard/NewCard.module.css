@@ -1,0 +1,38 @@
+.btnBack {
+	margin-bottom: 20px;
+}
+
+.newCardBtns {
+	display: flex;
+    justify-content: flex-end;
+	margin-top: 10px;
+}
+
+.newCardBtns button:last-child {
+	margin-left: 10px;
+}
+
+
+.cancelBtn {
+	color: var(--c-gray);
+	background-color: var(--bc-gray-lighter);
+	border-color: var(--bc-gray-lighter);
+}
+
+.cancelBtn:hover, .cancelBtn:active, .cancelBtn:focus {
+	color: var(--c-gray);
+	background-color: var(--bc-gray-light);
+	border-color: var(--bc-gray-light);
+}
+
+.saveBtn {
+	background-color: var(--bc-green-light);
+	color: var(--c-white);
+	border-color: var(--bc-green-light);
+}
+
+.saveBtn:hover, .saveBtn:active, .saveBtn:focus {
+	background-color: var(--bc-green);
+	border-color: var(--bc-green);
+	color: var(--c-white);
+}

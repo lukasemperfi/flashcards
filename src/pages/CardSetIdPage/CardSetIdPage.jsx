@@ -13,7 +13,9 @@ import { useSelector } from 'react-redux';
 import { selectCardSetById } from '../../store/selectors';
 import { nanoid } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux';
-import { deleteCardSet } from '../../store/cardSetsSlice';
+import { deleteSet, deleteCardsFromSet } from '../../store/cardSetsSlice';
+import { addSetFromCardsList } from '../../store/cardSetsSlice';
+import { TestEditor } from '../../components/TestEditor';
 const { Header, Content } = Layout;
 const { Title } = Typography;
 const { Search } = Input;
@@ -26,17 +28,18 @@ export const CardSetIdPage = () => {
 	const { title, cards } = cardSet
 	const emptyCardSet = Object.keys(cardSet).length === 0;
 	const [viewDeleteMessage, setViewDeleteMessage] = useState(false)
-	const [selectedAll, setSelectedAll] = useState(false)
-	const [disabledBtn, setDisabledBtn] = useState(true)
+	const [selectedCards, setSelectedCards] = useState([])
+	const [selectedRowKeys, setSelectedRowKeys] = useState([])
+	const [isCreateCardOpen, setIsCreateCardOpen] = useState(false)
 
 
 	const tableData = cards && cards.map(card => {
 		// console.log('render')
-		const progress = Math.round((card.statistics.correct * 100) / card.statistics.repeat)
-		return { ...card, key: card.id, statistics: { ...card.statistics, progress } }
+		const progress = Math.round((card?.statistics?.correct * 100) / card?.statistics?.repeat)
+		return { ...card, key: card.id, statistics: { ...card?.statistics, progress } }
 	})
 
-	const cardsDone = tableData && tableData.filter(card => card.statistics.progress > 65).length
+	const cardsDone = tableData && tableData.filter(card => card?.statistics?.progress > 65).length
 
 	const progressBarColor = (percent) => {
 		if (percent < 50) {
@@ -51,16 +54,28 @@ export const CardSetIdPage = () => {
 	}
 
 	const dropdownMenuHandler = ({ key }) => {
-		if (key === 'deleteCardSet') {
+		if (key === 'deleteSet') {
 			console.log('work')
-			dispatch(deleteCardSet({ id: cardSetId }))
+			dispatch(deleteSet({ id: cardSetId }))
 			setViewDeleteMessage(true)
+		}
+	}
+
+	const addCardsKitFromCardsList = (title) => {
+		dispatch(addSetFromCardsList({ title, cards: selectedCards }))
+		setSelectedRowKeys([])
+	}
+
+	const deleteCardsFromCardsKit = () => {
+		if (selectedRowKeys.length > 0) {
+			dispatch(deleteCardsFromSet({ kitId: cardSetId, cardsId: selectedRowKeys }))
+			setSelectedRowKeys([])
 		}
 	}
 
 	const menu = (
 		<Menu onClick={dropdownMenuHandler}>
-			<Menu.Item key='deleteCardSet'>
+			<Menu.Item key='deleteSet'>
 				Удалить набор
 			</Menu.Item>
 		</Menu>
@@ -68,14 +83,14 @@ export const CardSetIdPage = () => {
 
 
 	const rowSelection = {
+		selectedRowKeys,
 		onChange: (selectedRowKeys, selectedRows) => {
-			setDisabledBtn(selectedRows.length === 0)
-		},
-		onSelectAll: (selected, selectedRows, changeRows) => {
-			setSelectedAll(selected)
+			setSelectedCards(selectedRows)
+			setSelectedRowKeys(selectedRowKeys)
 		},
 	};
-// console.log(selectedRows);
+
+
 	return (
 		<>
 			{viewDeleteMessage && <div>Набор удалён</div>}
@@ -99,15 +114,30 @@ export const CardSetIdPage = () => {
 
 					</Header>
 					<Content className={classes.content}>
-						<CardsNav 
-						selectedAll={selectedAll}
-						disabledBtn={disabledBtn}
-						/>
-						<CardsTable
-							data={tableData}
-							progressBarColor={progressBarColor}
-							rowSelection={rowSelection}
-						/>
+						{isCreateCardOpen
+							?
+							<NewCard
+								cardSetId={cardSetId}
+								setIsCreateCardOpen={setIsCreateCardOpen}
+							/>
+							:
+							(
+								<>
+									<CardsNav
+										disabledBtn={selectedRowKeys.length === 0}
+										addCards={addCardsKitFromCardsList}
+										deleteCards={deleteCardsFromCardsKit}
+										setIsCreateCardOpen={setIsCreateCardOpen}
+									/>
+									<CardsTable
+										data={tableData}
+										progressBarColor={progressBarColor}
+										rowSelection={rowSelection}
+									/>
+								</>
+							)
+						}
+
 					</Content>
 				</>
 				)}

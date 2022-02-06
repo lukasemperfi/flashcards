@@ -18,38 +18,34 @@ const editorConfiguration = {
 
 const testData = JSON.parse(localStorage.getItem("test"));
 
-// console.log(testData);
 
-export const TestEditor = () => {
-	const [text, setText] = useState('')
+export const TestEditor = ({newCard, setNewCard}) => {
+	const [data, setData] = useState('')
 
 
-	const [isEdit, setIsEdit] = useState(false)
 
-const editToogle = () => {
-	setIsEdit( prev => !prev)
-}
+// console.log(title)
 
 	return (
 		<>
-			<button onClick={editToogle}>Редактировать</button>
-			{isEdit
-				?
 				<div >
 					<CKEditor
 						editor={Editor}
 						config={editorConfiguration}
-						// data={testData}
+						data={data}
 						// onReady={editor => {
 						// 	// You can store the "editor" and use when it is needed.
 						// 	console.log('Editor is ready to use!', editor);
 						// 	editor.setData(testData);
 						// }}
 						onChange={(event, editor) => {
-							const data = editor.getData();
-							setText(data)
+							const data = editor.getData()
+							const title = editor.plugins.get('Title').getTitle()
+							const body = editor.plugins.get('Title').getBody()
+							// setData(data)
+							setNewCard({title, body})
+
 							// window.localStorage.setItem('test', JSON.stringify(data));
-							console.log({ data });
 							// console.log(editor.plugins.get('Title').getBody()); 
 
 						}}
@@ -61,8 +57,8 @@ const editToogle = () => {
 					// }}
 					/>
 				</div>
-				:
-				<div className={classes.card}>
+
+				{/* <div className={classes.card}>
 					<div className={classes.cardHeader}>
 						<div className={classes.cardTop}></div>
 						<div className={classes.cardTitle}>
@@ -72,8 +68,8 @@ const editToogle = () => {
 					<div className={classes.cardBody}>
 						Введите ответ
 					</div>
-				</div>
-			}
+				</div> */}
+
 		</>
 	);
 };

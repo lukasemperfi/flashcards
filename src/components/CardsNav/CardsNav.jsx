@@ -5,27 +5,34 @@ import { ModalForm } from '../UI/ModalForm/ModalForm';
 import { CardsSetAdd } from '../CardsSetAdd/CardsSetAdd';
 
 
+
 const { Search } = Input;
 
-export const CardsNav = ({ selectedAll, disabledBtn }) => {
-
-	const handlerSelect = () => {
-		if (selectedAll) {
-			// 'delete All'
-		}
-
-	}
+export const CardsNav = ({ disabledBtn, addCards, deleteCards, setIsCreateCardOpen }) => {
 
 
 	return (
 		<div className={classes.nav}>
 			<Space className={classes.space} size={[8, 16]} wrap>
+
 				<Search placeholder="Поиск по имени" allowClear style={{ width: 250 }} />
-				<CardsSetAdd 
-					showBtn={<Button type="primary">Создать карточку</Button>}
-				/>								
-				<Button type="primary" disabled={disabledBtn} >Создать список</Button>
-				<Button type="primary" disabled={disabledBtn} >Удалить</Button>
+				<Button
+					type="primary"
+					onClick={ () => setIsCreateCardOpen(true) }
+				>
+					Создать карточку
+				</Button>
+				<CardsSetAdd
+					showBtn={<Button type="primary" disabled={disabledBtn} >Создать список</Button>}
+					addCardsSet={addCards}
+				/>
+				<Button
+					type="primary"
+					disabled={disabledBtn}
+					onClick={deleteCards}
+				>
+					Удалить
+				</Button>
 			</Space>
 		</div>
 	);

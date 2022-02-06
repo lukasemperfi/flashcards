@@ -29,6 +29,10 @@ body {
     font-family: Roboto;;
 }
 
+.ck.ck-editor__editable_inline>:first-child {
+	border-bottom: 1px solid #b3b3b4;
+}
+
 .ck-content .page-break__label {
 	color: red;
 }

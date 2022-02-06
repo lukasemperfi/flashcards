@@ -3,13 +3,12 @@ import classes from './CardsSetAdd.module.css'
 import cn from 'classnames'
 import { ModalForm } from '../UI/ModalForm/ModalForm';
 import { CollapsedButton } from '../UI/CollapsedButton/CollapsedButton';
-import { useDispatch } from 'react-redux';
-import { addCardSet } from '../../store/cardSetsSlice';
 
-export const CardsSetAdd = ({ showBtn }) => {
+
+export const CardsSetAdd = ({ showBtn, addCardsSet }) => {
 	const [modalForm, setModalForm] = useState(false)
 	const [title, setTitle] = useState('')
-	const dispatch = useDispatch()
+
 
 	const showModalForm = () => {
 		setModalForm(prev => !prev)
@@ -20,10 +19,10 @@ export const CardsSetAdd = ({ showBtn }) => {
 		setTitle('')
 	}
 
-	const addCardKit = (event) => {
+	const confirmClick = (event) => {
 		event.preventDefault()
 		if (title !== '') {
-			dispatch(addCardSet({ title }))
+			addCardsSet(title)
 			setModalForm(false)
 			setTitle('')
 		}
@@ -43,7 +42,7 @@ export const CardsSetAdd = ({ showBtn }) => {
 				visible={modalForm}
 				setVisible={setModalForm}
 				canselClick={canselClick}
-				confirmClick={addCardKit}
+				confirmClick={confirmClick}
 				cancelText='Отменить'
 				confirmText='Создать'
 				inputValue={title}

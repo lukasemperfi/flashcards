@@ -16,11 +16,3 @@ export const selectCardSetById = (state, id) => {
 	return selectCardSets(state).find(cardSet => cardSet.id === id) || defaultCardSet
 }
 
-
-// export const selectCardsLength = state => selectAll(state).cardSets
-
-
-// export const selectCardsTableData = (state, id) => {
-// 	// console.log('rendered cardSetId selector')
-// 	return 
-// }
