@@ -30,7 +30,7 @@ export const NewCard = ({ cardSetId, setIsCreateCardOpen }) => {
 
 	}
 
-	const onCloseNewCard = () => {
+	const closeNewCard = () => {
 		setIsCreateCardOpen(false)
 	}
 
@@ -40,7 +40,7 @@ export const NewCard = ({ cardSetId, setIsCreateCardOpen }) => {
 				<Button
 					type="text"
 					icon={<ArrowLeftOutlined />}
-					onClick={onCloseNewCard}
+					onClick={closeNewCard}
 				>
 					Назад
 				</Button>
@@ -49,20 +49,9 @@ export const NewCard = ({ cardSetId, setIsCreateCardOpen }) => {
 				<TestEditor
 					newCard={newCard}
 					setNewCard={setNewCard}
+					onCancelClick={closeNewCard}
+					onConfirmClick={addCardToKit}
 				/>
-				<div className={classes.newCardBtns}>
-					<Button
-						className={classes.cancelBtn}
-						onClick={onCloseNewCard}
-					>Отменить
-					</Button>
-					<Button
-						className={classes.saveBtn}
-						onClick={addCardToKit}
-					>
-						Сохранить
-					</Button>
-				</div>
 			</div >
 		</>
 	);

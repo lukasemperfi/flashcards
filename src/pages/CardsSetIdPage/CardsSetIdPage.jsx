@@ -4,7 +4,6 @@ import { Layout, Progress, Menu, Typography, Button, Input, Dropdown } from 'ant
 import { MoreOutlined } from '@ant-design/icons';
 import { CardsSetTable } from '../../components/CardsSetTable/CardsSetTable';
 import { CardIdPage } from '../CardIdPage/CardIdPage';
-import { CardsSetNav } from '../../components/CardsSetNav/CardsSetNav';
 import { CardsSetStatistic } from '../../components/CardsSetStatistic/CardsSetStatistic';
 import { NewCard } from '../../components/NewCard/NewCard';
 import { Quiz } from '../../components/Quiz/Quiz';
@@ -13,8 +12,7 @@ import { useSelector } from 'react-redux';
 import { selectCardSetById } from '../../store/selectors';
 import { nanoid } from '@reduxjs/toolkit'
 import { useDispatch } from 'react-redux';
-import { deleteSet, deleteCardsFromSet } from '../../store/cardSetsSlice';
-import { addSetFromCardsList } from '../../store/cardSetsSlice';
+import { deleteSet, deleteCardsFromSet, addSetFromCardsList } from '../../store/cardSetsSlice';
 import { TestEditor } from '../../components/TestEditor';
 const { Header, Content } = Layout;
 const { Title } = Typography;
@@ -22,54 +20,23 @@ const { Search } = Input;
 
 
 export const CardsSetIdPage = () => {
-	const dispatch = useDispatch()
 	const { cardSetId } = useParams()
-	const cardSet = useSelector(state => selectCardSetById(state, cardSetId))
-	const { title, cards } = cardSet
-	const emptyCardSet = Object.keys(cardSet).length === 0;
+	const { title = '', cards = [] } = useSelector(state => selectCardSetById(state, cardSetId))
 	const [viewDeleteMessage, setViewDeleteMessage] = useState(false)
-	const [selectedCards, setSelectedCards] = useState([])
-	const [selectedRowKeys, setSelectedRowKeys] = useState([])
 	const [isCreateCardOpen, setIsCreateCardOpen] = useState(false)
+	const dispatch = useDispatch()
 
 
-	const tableData = cards && cards.map(card => {
-		// console.log('render')
+	const cardsDone = cards && cards.filter(card => {
 		const progress = Math.round((card?.statistics?.correct * 100) / card?.statistics?.repeat)
-		return { ...card, key: card.id, statistics: { ...card?.statistics, progress } }
-	})
+		return progress > 65
+	}).length
 
-	const cardsDone = tableData && tableData.filter(card => card?.statistics?.progress > 65).length
-
-	const progressBarColor = (percent) => {
-		if (percent < 50) {
-			return '#ff4d4f'
-		}
-		if (percent > 49 && percent < 66) {
-			return '#faad14'
-		}
-		if (percent > 65) {
-			return '#00a82d'
-		}
-	}
 
 	const dropdownMenuHandler = ({ key }) => {
 		if (key === 'deleteSet') {
-			console.log('work')
 			dispatch(deleteSet({ id: cardSetId }))
 			setViewDeleteMessage(true)
-		}
-	}
-
-	const addCardsKitFromCardsList = (title) => {
-		dispatch(addSetFromCardsList({ title, cards: selectedCards }))
-		setSelectedRowKeys([])
-	}
-
-	const deleteCardsFromCardsKit = () => {
-		if (selectedRowKeys.length > 0) {
-			dispatch(deleteCardsFromSet({ kitId: cardSetId, cardsId: selectedRowKeys }))
-			setSelectedRowKeys([])
 		}
 	}
 
@@ -82,27 +49,17 @@ export const CardsSetIdPage = () => {
 	)
 
 
-	const rowSelection = {
-		selectedRowKeys,
-		onChange: (selectedRowKeys, selectedRows) => {
-			setSelectedCards(selectedRows)
-			setSelectedRowKeys(selectedRowKeys)
-		},
-	};
-
-
 	return (
 		<>
-			{viewDeleteMessage && <div>Набор удалён</div>}
-			{(emptyCardSet && !viewDeleteMessage) && <div>Страница не найдена</div>}
-			{!emptyCardSet &&
+			{viewDeleteMessage  && <div>Набор удалён</div>}
+			{(!cards.length && !viewDeleteMessage) && <div>Страница не найдена</div>}
+			{(!!cards.length) &&
 				(<>
 					<Header className={classes.header}>
 						<CardsSetStatistic
 							title={title}
 							cardsNumber={cards.length}
 							cardsDone={cardsDone}
-							progressBarColor={progressBarColor}
 						/>
 						<Dropdown overlay={menu} placement="bottomRight" trigger={['click']}>
 							<Button
@@ -121,26 +78,17 @@ export const CardsSetIdPage = () => {
 								setIsCreateCardOpen={setIsCreateCardOpen}
 							/>
 							:
-							(
-								<>
-									<CardsSetNav
-										disabledBtn={selectedRowKeys.length === 0}
-										addCards={addCardsKitFromCardsList}
-										deleteCards={deleteCardsFromCardsKit}
-										setIsCreateCardOpen={setIsCreateCardOpen}
-									/>
-									<CardsSetTable
-										data={tableData}
-										progressBarColor={progressBarColor}
-										rowSelection={rowSelection}
-									/>
-								</>
-							)
+							<CardsSetTable
+								cards={cards}
+								dispatch={dispatch}
+								setIsCreateCardOpen={setIsCreateCardOpen}
+								cardSetId={cardSetId}
+							/>
 						}
-
 					</Content>
-				</>
-				)}
+				</>)
+
+			}
 
 		</>
 	);

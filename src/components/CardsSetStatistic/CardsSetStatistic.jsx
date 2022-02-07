@@ -1,10 +1,11 @@
 import React from 'react';
 import classes from './CardsSetStatistic.module.css'
 import { Progress, Statistic, Button, } from 'antd';
+import { progressBarColor } from '../../utils/progressBarColor';
 
-export const CardsSetStatistic = ({ title, cardsNumber, cardsDone, progressBarColor }) => {
+export const CardsSetStatistic = ({ title, cardsNumber, cardsDone,  }) => {
 	const percent = Math.round((cardsDone * 100) / cardsNumber)
-
+	 
 	return (
 		<div className={classes.statistic}>
 			<div className={classes.statisticHeader}>

@@ -1,8 +1,106 @@
-.btnBack {
-	margin-bottom: 20px;
+.quiz {
+	background: rgb(240, 242, 245);
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.btnEdit {
-	margin-bottom: 8px;
+.container {
+    max-width: 770px;
+	padding: 10px;
+	width: 100%;
+}
+
+.btnBack {
+	position: absolute;
+	top: 30px;
+	left: 20px;
+	
+}
+
+.btnBack a {
+	text-decoration: none;
+	line-height: 1.5715;
+    position: relative;
+    display: inline-block;
+    font-weight: 400;
+    white-space: nowrap;
+    text-align: center;
+    background-image: none;
+    box-shadow: 0 2px 0 rgb(0 0 0 / 2%);
+    cursor: pointer;
+    transition: all .3s cubic-bezier(.645,.045,.355,1);
+    user-select: none;
+    touch-action: manipulation;
+    height: 32px;
+    padding: 4px 15px;
+    font-size: 14px;
+    border-radius: 2px;
+    color: rgba(0,0,0,.85);
+    background: transparent;
+	border: 0;
+	box-shadow: none;
+}
+
+.btnBack a:hover {
+	background: rgba(0,0,0,.018);
+}
+
+.btnBackText {
+	margin-left: 8px;
+}
+
+.cardBtnEdit {
+	margin-bottom: 10px;
 	text-align: end;
+} 
+
+.cardContent {
+
+	padding: 20px;
+	margin-bottom: 20px;
+    background: white;
+    line-height: 1.5;
+    box-shadow: rgb(50 50 93 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px;
+	font-family: Roboto, sans-serif;
+	border: 1px solid #c4c4c4;
+	border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+	margin-top: 5px;
+}
+
+.cardPanel {
+	height: 39.3px;
+	background-color: #fafafa;
+	border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+	border: 1px solid #c4c4c4;
+	border-bottom: none;
+	box-shadow: rgb(50 50 93 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px;
+
+}
+
+.cardTitle h1{
+	font-size: 30px;
+	font-weight: 700;
+	margin: 0;
+}
+
+.cardBody {
+	font-size: 16px;
+}
+
+.cardBtns {
+	display: flex;
+    justify-content: center;
+}
+
+.card .cardBody .panel > div {
+	padding: 0;
+}
+
+.card .cardBody .panel > div > div {
+	padding: 0;
 }

@@ -6,9 +6,9 @@ const initialValue = [
 		title: 'JavaScript',
 		cards: [
 			{
-				id: 'C1',
+				id: 'C1', 
 				question: 'Какие бывают типы данных в JS ?',
-				answer: 'number, string, object, boolean, null, undefined, bigint, symbol',
+				answer: 'ghghj',
 				tags: ['data', 'string'],
 				statistics: {
 					repeat: 5,

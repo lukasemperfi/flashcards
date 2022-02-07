@@ -13,6 +13,7 @@ export const AppRouter = () => {
 			<Route path='/' element={<MainLayout />}>
 				<Route index element={<WelcomePage />} />
 				<Route path=':cardSetId' element={<CardsSetIdPage />} />
+				<Route path=':cardSetId/:cardId' element={<CardIdPage />} />
 				<Route path='*' element={<NotFound />} />
 			</Route>
 		</Routes>

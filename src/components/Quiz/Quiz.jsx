@@ -4,6 +4,7 @@ import { Layout, Progress, Statistic, Typography, Button, Input, Space, Collapse
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 const { Panel } = Collapse;
 const { Title, Paragraph, Text, Link } = Typography;
+
 export const Quiz = () => {
 	const [isCollapseOpen, setIsCollapseOpen] = useState(false)
 

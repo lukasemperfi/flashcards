@@ -16,3 +16,7 @@ export const selectCardSetById = (state, id) => {
 	return selectCardSets(state).find(cardSet => cardSet.id === id) || defaultCardSet
 }
 
+export const selectCardById = (state, kitId, cardId) => {
+	return selectCardSetById(state, kitId)?.cards.find(card => card.id === cardId)
+}
+
