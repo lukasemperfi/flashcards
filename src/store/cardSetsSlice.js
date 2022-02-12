@@ -8,7 +8,7 @@ const initialValue = [
 			{
 				id: 'C1', 
 				question: 'Какие бывают типы данных в JS ?',
-				answer: 'ghghj',
+				answer: '<pre><code class="language-javascript">console.log( 8 % 3 );</code></pre>',
 				tags: ['data', 'string'],
 				statistics: {
 					repeat: 5,
@@ -19,7 +19,7 @@ const initialValue = [
 			{
 				id: 'C2',
 				question: 'Что такое чистые компоненты?',
-				answer: 'React.PureComponentточно такой же, как React.Componentза исключением того, что он обрабатывает shouldComponentUpdate()метод для вас. При изменении реквизита или состояния PureComponent будет выполнять поверхностное сравнение как реквизита, так и состояния. Компонент , с другой стороны, не будет сравнивать текущие реквизиты и состояние со следующими из коробки. Таким образом, компонент будет перерисовываться по умолчанию всякий раз , когда shouldComponentUpdateвызывается.',
+				answer: '<pre><code class="language-javascript">    useEffect(() =&gt; { hljs.highlightAll()}, [])</code></pre>',
 				tags: ['number',],
 				statistics: {
 					repeat: 4,
@@ -128,10 +128,28 @@ const cardSetsSlice = createSlice({
 				existingSet.cards = existingSet.cards.filter(card => !cardsId.some(id => id === card.id))
 			}
 		},
+		updateCard(state, action) {
+			const { kitId, cardId, question, answer } = action.payload
+			console.log(kitId, cardId, question, answer);
+			const existingCard = state.cardSets.find(set => set.id === kitId).cards.find(card => card.id === cardId)
+			if (existingCard) {
+				existingCard.question = question
+				existingCard.answer = answer
+			}
+		},
+		updateCardStatistics(state, action) {
+			const { kitId, cardId, resultName} = action.payload
+			console.log(kitId, cardId, resultName);
+			const existingCard = state.cardSets.find(set => set.id === kitId).cards.find(card => card.id === cardId)
+			if (existingCard) {
+				existingCard.statistics.repeat += 1 
+				existingCard.statistics[resultName] += 1 
+			}
+		},
 
 	}
 })
 
-export const { addSet, deleteSet, addSetFromCardsList, deleteCardsFromSet, addCard } = cardSetsSlice.actions
+export const { addSet, deleteSet, addSetFromCardsList, deleteCardsFromSet, addCard, updateCard, updateCardStatistics } = cardSetsSlice.actions
 
 export default cardSetsSlice.reducer

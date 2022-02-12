@@ -6,6 +6,13 @@ export const selectAll = state => state.cardSets
 
 export const selectCardSets = state => selectAll(state).cardSets
 
+export const selectFirstCardsSetId = state => selectCardSets(state)[0]?.id
+
+export const selectLastCardsSetId = state => {
+	const cardSets = selectCardSets(state)
+	return cardSets[cardSets.length - 1]?.id
+}
+
 export const selectSearchedCardSets = (state, query) => {
 	// console.log('rendered CardSets selector')
 	return selectCardSets(state).filter(cardSet => cardSet.title.toLowerCase().includes(query.toLowerCase()))

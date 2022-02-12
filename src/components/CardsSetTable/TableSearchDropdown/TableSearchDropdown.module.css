@@ -1,0 +1,16 @@
+.dropdown {
+	padding: 8px;
+}
+
+.dropdownInput {
+	display: block;
+	margin-bottom: 8px;
+}
+
+.searchBtn, .resetBtn {
+	width: 90px;
+}
+
+.filterBtn {
+	width: auto;
+}

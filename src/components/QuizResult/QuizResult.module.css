@@ -1,0 +1,10 @@
+.resultBody {
+	display: flex;
+	justify-content: space-between;
+    align-items: flex-start;
+}
+
+.resultStatistics {
+	font-size: 16px;
+	font-weight: 500;
+}

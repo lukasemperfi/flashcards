@@ -30,16 +30,21 @@ body {
 }
 
 .ck-blurred.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline {
+	outline: none;
 	padding: 20px;
-	/* margin-bottom: 20px; */
 	background: white;
 	font-size: 16px;
 	line-height: 1.5;
 	box-shadow: rgb(50 50 93 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px;
 	font-family: Roboto, sans-serif;
-	border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-	margin-top: 5px;
+	border-radius: 6px;
+	margin-top: 10px;
+	transition: box-shadow .3s;
+	border: none;
+}
+
+.ck-blurred.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline ul { 
+	margin-bottom: 16px;
 }
 
 .editor-custom .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
@@ -52,11 +57,14 @@ body {
 	/* box-shadow: #40a9ff 0px 2px 5px -1px, #40a9ff 0px 1px 3px -1px; */
 	font-family: Roboto, sans-serif;
 	border-radius: 6px;
-	transition: .3s;
+	transition: box-shadow .3s;
 	border: none;
-	margin-top: 5px;
+	margin-top: 10px;
 }
 
+.editor-custom .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused ul {
+	margin-bottom: 16px;
+}
 
 
 
@@ -68,8 +76,7 @@ body {
 }
 
 .editor-custom .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar, .ck.ck-editor__top .ck-sticky-panel .ck-toolbar.ck-rounded-corners {
-	border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+border-radius: 6px;
 	box-shadow: rgb(50 50 93 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px;
 
 }

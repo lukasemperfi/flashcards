@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import classes from './CardsSetAdd.module.css'
-import cn from 'classnames'
 import { ModalForm } from '../UI/ModalForm/ModalForm';
-import { CollapsedButton } from '../UI/CollapsedButton/CollapsedButton';
-
 
 export const CardsSetAdd = ({ showBtn, addCardsSet }) => {
 	const [modalForm, setModalForm] = useState(false)

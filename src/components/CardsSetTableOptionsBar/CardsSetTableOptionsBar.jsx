@@ -8,17 +8,17 @@ import { CardsSetAdd } from '../CardsSetAdd/CardsSetAdd';
 
 const { Search } = Input;
 
-export const CardsSetTableOptionsBar = ({ disabledBtn, addCards, deleteCards, setIsCreateCardOpen, onSearch }) => {
+export const CardsSetTableOptionsBar = ({ disabledBtn, addCards, deleteCards, createNewCard, clearFilters }) => {
 
 
 	return (
 		<div className={classes.nav}>
 			<Space className={classes.space} size={[8, 16]} wrap>
 
-				<Search placeholder="Поиск по имени" allowClear style={{ width: 250 }} onSearch={onSearch}/>
+				{/* <Input placeholder="Поиск по имени" allowClear style={{ width: 250 }} /> */}
 				<Button
 					type="primary"
-					onClick={ () => setIsCreateCardOpen(true) }
+					onClick={createNewCard}
 				>
 					Создать карточку
 				</Button>
@@ -27,12 +27,17 @@ export const CardsSetTableOptionsBar = ({ disabledBtn, addCards, deleteCards, se
 					addCardsSet={addCards}
 				/>
 				<Button
+					onClick={clearFilters}
+				>
+					Очистить все фильтры
+				</Button>
+				{/* <Button
 					type="primary"
 					disabled={disabledBtn}
 					onClick={deleteCards}
 				>
 					Удалить
-				</Button>
+				</Button> */}
 			</Space>
 		</div>
 	);

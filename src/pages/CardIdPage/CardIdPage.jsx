@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState, useEffect } from 'react';
 import { Input, Space, PageHeader, Button, Anchor, Collapse, Typography } from 'antd';
 import classes from './CardIdPage.module.css'
 import { CheckOutlined, CloseOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { TestEditor } from '../../components/TestEditor';
 import { useParams, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectCardById } from '../../store/selectors';
 import parse from 'html-react-parser';
+import { updateCard } from '../../store/cardSetsSlice';
+
+
+
+import hljs from 'highlight.js/lib/core';
+import javascript from 'highlight.js/lib/languages/javascript';
+hljs.registerLanguage('javascript', javascript);
+
 
 
 
@@ -18,30 +26,33 @@ export const CardIdPage = () => {
 	const [isEditOpen, setIsEditOpen] = useState(false)
 
 	const editorData = card.question + card.answer
+	const dispatch = useDispatch()
+	// console.log(editorData);
 
-	console.log(editorData);
+	useEffect(() => {
+		hljs.highlightAll()
+	}, [isEditOpen])
 
 	const onEditClick = () => {
 		setIsEditOpen(prev => !prev)
 	}
 
-	const updateCard = () => {
+	const upgradeCard = () => {
 		if (newCard.title && newCard.body) {
-
+		dispatch(updateCard({ kitId: cardSetId, cardId, question: parse(newCard.title), answer: newCard.body }))
+		setIsEditOpen(false)
 		}
-		// dispatch(addCard({ kitId: cardSetId, card }))
-		// setIsCreateCardOpen(false)
+
 	}
 	const onChangeEditor = (event, editor) => {
 		const data = editor.getData()
 		const title = editor.plugins.get('Title').getTitle()
 		const body = editor.plugins.get('Title').getBody()
-		console.log(Array.from( editor.ui.componentFactory.names() ));
 
-		// setNewCard({ title, body })
+		setNewCard({ title, body })
 
 		// window.localStorage.setItem('test', JSON.stringify(data));
-		// console.log(editor.plugins.get('Title').getBody()); 
+		console.log(title + body);
 
 	}
 
@@ -57,23 +68,25 @@ export const CardIdPage = () => {
 					</Link>
 				</div>
 				<div className={classes.card}>
-					<div className={classes.cardBtnEdit}>
+					{!isEditOpen && (<div className={classes.cardBtnEdit}>
 						<Button type='primary'
 							// disabled={isEditOpen} 
 							onClick={onEditClick}>Редактировать</Button>
-					</div>
+					</div>)
+					}
 
 					{isEditOpen
 						?
 						<TestEditor
 							data={editorData}
 							onChange={onChangeEditor}
+							onCloseClick={onEditClick}
+							onSaveClick={upgradeCard}
 						/>
 
 						:
 						(
 							<>
-								<div className={classes.cardPanel}></div>
 								<div className={classes.cardContent}>
 									<div className={classes.cardHeader}>
 										<div className={classes.cardTitle}>
@@ -82,7 +95,7 @@ export const CardIdPage = () => {
 									</div>
 									<div className={classes.cardBody}>
 										{parse(card.answer)}
-									</div>
+									</div> 
 								</div>
 							</>
 

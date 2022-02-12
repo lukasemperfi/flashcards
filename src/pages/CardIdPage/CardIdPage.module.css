@@ -55,20 +55,26 @@
 .cardBtnEdit {
 	margin-bottom: 10px;
 	text-align: end;
+	min-height: 39.46px;
 } 
 
 .cardContent {
-
+	outline: none;
 	padding: 20px;
-	margin-bottom: 20px;
-    background: white;
-    line-height: 1.5;
-    box-shadow: rgb(50 50 93 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px;
+	/* margin-bottom: 20px; */
+	background: white;
+	font-size: 16px;
+	line-height: 1.5;
+	box-shadow: rgb(50 50 93 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px;
 	font-family: Roboto, sans-serif;
-	border: 1px solid #c4c4c4;
-	border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
+	border-radius: 6px;
 	margin-top: 5px;
+	transition: .3s;
+	border: none;
+/* position: absolute;
+top: 34px;
+left: 234px; */
+
 }
 
 .cardPanel {
@@ -104,3 +110,22 @@
 .card .cardBody .panel > div > div {
 	padding: 0;
 }
+
+/* pre {
+	padding: 1em;
+    color: #353535;
+    background: hsla(0,0%,78%,.3);
+    border: 1px solid #c4c4c4;
+    border-radius: 2px;
+    text-align: left;
+    direction: ltr;
+    tab-size: 4;
+    white-space: pre-wrap;
+    font-style: normal;
+    min-width: 200px;
+}
+
+code, pre {
+	font-size: 1em;
+    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,Courier,monospace;
+} */

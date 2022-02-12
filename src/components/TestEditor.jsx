@@ -8,7 +8,6 @@ import classes from './TestEditor.module.css'
 
 const editorConfiguration = {
 	// toolbar: ['bold', 'italic']
-	removePlugins: ['Markdown', 'Code', 'FontBackgroundColor', 'FontFamily', 'FontSize', 'PasteFromOffice'],
 	placeholder: 'Введите ответ',
 	title: {
 		placeholder: 'Введите вопрос'
@@ -19,7 +18,7 @@ const editorConfiguration = {
 const testData = JSON.parse(localStorage.getItem("test"));
 
 
-export const TestEditor = ({data, onChange, onCancelClick, onConfirmClick }) => {
+export const TestEditor = ({data = '', onChange, onCloseClick, onSaveClick }) => {
 
 	return (
 		<>
@@ -41,12 +40,12 @@ export const TestEditor = ({data, onChange, onCancelClick, onConfirmClick }) => 
 				<div className={classes.editorBtns}>
 					<Button
 						className={classes.cancelBtn}
-						// onClick={onCloseNewCard}
+						onClick={onCloseClick}
 					>Отменить
 					</Button>
 					<Button
 						className={classes.saveBtn}
-						// onClick={addCardToKit}
+						onClick={onSaveClick}
 					>
 						Сохранить
 					</Button>

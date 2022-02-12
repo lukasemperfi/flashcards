@@ -34,6 +34,18 @@ export const NewCard = ({ cardSetId, setIsCreateCardOpen }) => {
 		setIsCreateCardOpen(false)
 	}
 
+	const onChangeEditor = (event, editor) => {
+		const data = editor.getData()
+		const title = editor.plugins.get('Title').getTitle()
+		const body = editor.plugins.get('Title').getBody()
+
+		setNewCard({ title, body })
+
+		// window.localStorage.setItem('test', JSON.stringify(data));
+		console.log(title + body);
+
+	}
+
 	return (
 		<>
 			<div className={classes.btnBack}>
@@ -47,10 +59,9 @@ export const NewCard = ({ cardSetId, setIsCreateCardOpen }) => {
 			</div>
 			<div className='containerCard'>
 				<TestEditor
-					newCard={newCard}
-					setNewCard={setNewCard}
-					onCancelClick={closeNewCard}
-					onConfirmClick={addCardToKit}
+					onChange={onChangeEditor}
+					onCloseClick={closeNewCard}
+					onSaveClick={addCardToKit}
 				/>
 			</div >
 		</>

@@ -1,13 +1,12 @@
-import React from 'react';
-import { Button, Input, Menu, Space, Tooltip } from 'antd';
-import { PlusOutlined, DatabaseOutlined, SearchOutlined } from '@ant-design/icons';
+import React from 'react'
+import { Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons'
 import classes from './CollapsedButton.module.css'
 import cn from 'classnames'
 
 
 export const CollapsedButton = ({ collapsed, onClick }) => {
 	return (
-		<Tooltip placement="right" title={'Добавить'} align={{ offset: [16, 0] }} trigger={collapsed ? 'hover' : ''}>
 			<Button
 				className={classes.addBtn}
 				icon={<PlusOutlined className={classes.addBtnIcon} />}
@@ -21,6 +20,5 @@ export const CollapsedButton = ({ collapsed, onClick }) => {
 					Создать
 				</div>
 			</Button>
-		</Tooltip>
-	);
-};
+	)
+}

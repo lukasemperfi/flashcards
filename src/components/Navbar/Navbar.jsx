@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Menu, Empty } from 'antd';
 import classes from './Navbar.module.css'
 import cn from 'classnames'
@@ -13,12 +13,22 @@ import { addSet } from '../../store/cardSetsSlice';
 
 import { selectCardSets, selectSearchedCardSets } from '../../store/selectors';
 import { CardsSetMenu } from '../CardsSetMenu/CardsSetMenu';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 export const Navbar = ({ collapsed }) => {
 	const [search, setSearch] = useState('')
 	const cardsSet = useSelector(state => selectSearchedCardSets(state, search))
+	const lastCardsSetId = cardsSet[cardsSet.length - 1]?.id
 	const dispatch = useDispatch()
+
+	console.log(cardsSet)
+
+	useEffect(() => {
+			// console.log(searchRef.current);
+	}, [])
+	
 
 	const searchOnChange = (event) => {
 		setSearch(event.target.value)
@@ -39,6 +49,7 @@ export const Navbar = ({ collapsed }) => {
 						collapsed={collapsed}
 						inputValue={search}
 						inputOnChange={searchOnChange}
+					
 					/>
 				</div>
 				<div className={classes.navbarTopCol}>
@@ -49,7 +60,7 @@ export const Navbar = ({ collapsed }) => {
 				</div>
 			</div>
 			<SimpleBar style={{ maxHeight: 'calc(100% - 150px)' }}>
-				{testData.length
+				{cardsSet.length
 					?
 					<CardsSetMenu data={cardsSet} />
 					:

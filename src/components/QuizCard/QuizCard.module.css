@@ -1,0 +1,54 @@
+.cardHeader, .cardBody {
+	padding: 20px ;
+	margin-bottom: 20px;
+    background: white;
+    line-height: 1.5;
+    box-shadow: rgb(50 50 93 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px;
+    border-radius: 6px;
+	font-family: Roboto, sans-serif;
+}
+
+.cardTitle h1{
+	margin-bottom: 0px;
+	font-size: 2em;
+	font-weight: 700;
+}
+
+.cardBody {
+	font-size: 16px;
+	height: 76px;
+	overflow: hidden;
+}
+
+.panel {
+	cursor: pointer;
+	margin-bottom: 25px;
+}
+
+.active{
+	height: auto;
+}
+
+.cardBtns {
+	display: flex;
+    justify-content: center;
+	margin-bottom: 20px;
+}
+
+.noBtnIcon {
+	color:#f64646;
+}
+
+.yesBtnIcon {
+	color:  #08f208;
+}
+
+
+.collapseTitle {
+	font-size: 1.5em;
+    font-weight: 600;
+    margin: 0;
+}
+
+
+

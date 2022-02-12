@@ -22,9 +22,8 @@
 	font-size: 1em;
 	border-radius: 20px;
 	padding: 0px 5px 0px 36px;
-	visibility: visible;
-	opacity: 1;
-	transition: all 0.3s 0.5s;
+	z-index: 1;
+	transition: all .3s .3s;
 }
 
 
@@ -46,35 +45,56 @@
 	z-index: 90;
 }
 
-.search:focus-within{
+.search:focus-within {
 	box-shadow: #40a9ff 0px 0px 7px 2px;
 }
+
 .hidenSearchFocus:focus-within {
 	box-shadow: none;
 }
 
-
 .collapsed {
-	/* width: 36px; */
 	visibility: hidden;
 	opacity: 0;
 	transition: opacity, visibility .3s;
 }
 
-.showSearch {
+
+
+
+.showSearchEnterActive {
+	box-shadow: rgb(0 21 41 / 30%) 0px 0px 1px 0px,
+		rgb(0 21 41 / 50%) 0px 1px 5px 1px;
+		visibility: visible;
+		opacity: 1;
 	width: 200px;
-	box-shadow: rgb(0 21 41 / 30%) 0px 0px 1px 0px, 
-	rgb(0 21 41 / 50%) 0px 1px 5px 1px;
-	z-index: 80;
+	transition: all .3s ;
+}
+
+.showSearchEnterDone {
 	visibility: visible;
-	opacity: 1;
+		opacity: 1;
+	width: 200px;
+	box-shadow: rgb(0 21 41 / 30%) 0px 0px 1px 0px,
+		rgb(0 21 41 / 50%) 0px 1px 5px 1px;
+}
+
+.showSearchEnterDone:focus {
+	box-shadow: #40a9ff 0px 0px 7px 2px;
 	transition: all .3s;
 }
 
-.showSearch:focus {
-	box-shadow: #40a9ff 0px 0px 7px 2px;
+.showSearchExit {
+	visibility: visible;
+		opacity: 1;
+	width: 200px;
+	box-shadow: rgb(0 21 41 / 30%) 0px 0px 1px 0px,
+		rgb(0 21 41 / 50%) 0px 1px 5px 1px;
 }
 
-.test {
-display: none;
+.showSearchExitActive {
+	width: 100%;
+	box-shadow: none;
+	transition: all .3s;
 }
+

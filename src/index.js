@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom';
 import 'simplebar/dist/simplebar.min.css';
 import './index.css'
 import 'antd/dist/antd.min.css'
+import './monokai-sublime.min.css'
+
 import App from './App';
 import { Provider } from 'react-redux';
 import store from './store';
 import { BrowserRouter } from 'react-router-dom';
+// import 'highlight.js/styles/github.css';
+
 
 ReactDOM.render(
 	<Provider store={store}>

@@ -1,69 +1,79 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classes from './Quiz.module.css';
-import { Layout, Progress, Statistic, Typography, Button, Input, Space, Collapse } from 'antd';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
-const { Panel } = Collapse;
-const { Title, Paragraph, Text, Link } = Typography;
+import {Button, Space, Modal } from 'antd';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { QuizCard } from '../QuizCard/QuizCard';
+import { QuizResult } from '../QuizResult/QuizResult';
+import { useDispatch } from 'react-redux';
+import { updateCardStatistics } from '../../store/cardSetsSlice';
+
+
 
 export const Quiz = () => {
-	const [isCollapseOpen, setIsCollapseOpen] = useState(false)
+	const navigate = useNavigate()
+	const location = useLocation()
+	const dispatch = useDispatch()
+	const { cards, pathFrom, kitId } = location.state
+	const [cardNumber, setCardNumber] = useState(0)
+	const [visible, setVisible] = useState(false)
+	const [result, setResult] = useState({ correct: 0, notCorrect: 0 })
 
-	console.log(isCollapseOpen);
+	console.log(location.state)
 
-	const collapseHeader = <Title level={4} style={{margin: 0}}>{isCollapseOpen ? 'СКРЫТЬ ОТВЕТ' : 'ПОКАЗАТЬ ОТВЕТ'}</Title>
 
+
+	const onCorrectNotCorrectBtnsClick = (event, cardId) => {
+		const name = event.currentTarget.name
+
+		if (cardNumber < cards.length) {
+			if (name === 'correct') { 
+				setResult({ ...result, correct: result.correct + 1 })
+				dispatch(updateCardStatistics({kitId, cardId, resultName: name })) 
+			}
+			if (name === 'notCorrect') { 
+				setResult({ ...result, notCorrect: result.notCorrect + 1 })
+				dispatch(updateCardStatistics({kitId, cardId, resultName: name }))  
+			}
+		}
+		if ((cardNumber + 1) < cards.length) { setCardNumber(prevCard => prevCard + 1) }
+		else { setVisible(true) }
+	}
+
+	const onModalCancelClick = () => {
+		navigate(pathFrom)
+	}
+
+	const onModalAgainClick = () => {
+		setCardNumber(0)
+		setResult({ correct: 0, notCorrect: 0 })
+		setVisible(false)
+	}
+
+	const modalFooter = (
+		<div className={classes.modalBtns}>
+			<Space size='middle'>
+				<Button type="ghost" className={classes.modalCancelBtn} onClick={onModalCancelClick}>Выйти</Button>
+				<Button type="primary" className={classes.modalAgainBtn} onClick={onModalAgainClick}>Повторить еще раз</Button>
+			</Space>
+		</div>)
 
 	return (
 		<section className={classes.quiz}>
 			<div className={classes.container}>
-				<div className={classes.card}>
-					<div className={classes.cardHeader}>
-						<div className={classes.cardTitle}>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit?
-						</div>
-						<div className={classes.cardBtns}>
-							<Space>
-								<Button type="primary" icon={<CheckOutlined />}>Знаю</Button>
-								<Button type="primary" icon={<CloseOutlined />} >Не знаю</Button>
-							</Space>
-						</div>
-					</div>
-					<div className={classes.cardBody}>
-						<Collapse bordered={false} ghost={true} onChange={() => setIsCollapseOpen(!isCollapseOpen)}>
-							<Panel header={collapseHeader} key="1" className={classes.panel} showArrow={false}>
-						
-									<p>
-										Lorem ipsum dolor sit amet consectetur adipisicing elit.
-										Totam ex consectetur, blanditiis hic dignissimos, nesciunt
-										eveniet repellat distinctio laborum fugiat rerum mollitia
-										debitis deserunt minus est, ullam eaque animi accusamus.
-										Lorem ipsum dolor sit amet consectetur adipisicing elit.
-										Totam ex consectetur, blanditiis hic dignissimos, nesciunt
-										eveniet repellat distinctio laborum fugiat rerum mollitia
-										debitis deserunt minus est, ullam eaque animi accusamus.
-										Lorem ipsum dolor sit amet consectetur adipisicing elit.
-										Totam ex consectetur, blanditiis hic dignissimos, nesciunt
-										eveniet repellat distinctio laborum fugiat rerum mollitia
-										debitis deserunt minus est, ullam eaque animi accusamus.
-										Lorem ipsum dolor sit amet consectetur adipisicing elit.
-										Totam ex consectetur, blanditiis hic dignissimos, nesciunt
-										eveniet repellat distinctio laborum fugiat rerum mollitia
-										debitis deserunt minus est, ullam eaque animi accusamus.
-										Lorem ipsum dolor sit amet consectetur adipisicing elit.
-										Totam ex consectetur, blanditiis hic dignissimos, nesciunt
-										eveniet repellat distinctio laborum fugiat rerum mollitia
-										debitis deserunt minus est, ullam eaque animi accusamus.
-										Lorem ipsum dolor sit amet consectetur adipisicing elit.
-										Totam ex consectetur, blanditiis hic dignissimos, nesciunt
-										eveniet repellat distinctio laborum fugiat rerum mollitia
-										debitis deserunt minus est, ullam eaque animi accusamus.
-									</p>
-								
-							</Panel>
-						</Collapse>
-					</div>
-				</div>
+				<QuizCard
+					card={cards[cardNumber]}
+					onCorrectNotCorrectBtnsClick={onCorrectNotCorrectBtnsClick}
+				/>
 			</div>
+			<Modal
+				width={300}
+				visible={visible}
+				maskClosable={false}
+				onCancel={onModalCancelClick}
+				footer={modalFooter}
+			>
+				<QuizResult result={result} />
+			</Modal>
 		</section>
 	);
 };
