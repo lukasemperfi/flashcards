@@ -1,47 +1,39 @@
-import React, { useState } from 'react'
-import classes from './MainLayout.module.css'
-import { Layout } from 'antd'
-import { Navbar } from '../Navbar/Navbar'
-import SimpleBar from 'simplebar-react'
-import { Outlet, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import { selectFirstCardsSetId, selectLastCardsSetId } from '../../store/selectors'
-import { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
+import classes from './MainLayout.module.css'
+
+import { Navbar } from '../Navbar/Navbar'
+import { CardsSetEmpty } from '../CardsSetEmpty/CardsSetEmpty'
+
+import { Layout } from 'antd'
+
+import { useSelector } from 'react-redux'
+import { selectFirstCardsSetId} from '../../store/selectors'
+
+import { Outlet, useMatch, useNavigate } from 'react-router-dom'
+
+import SimpleBar from 'simplebar-react'
 
 const { Sider } = Layout
 
 export const MainLayout = () => {
+	const navigate = useNavigate()
+	const match = useMatch('/')
+
 	const [collapsed, setCollapsed] = useState(false)
 	const firstCardsSetId = useSelector(selectFirstCardsSetId)
-	const lastCardsSetId = useSelector(selectLastCardsSetId)
-	
-	const navigate = useNavigate()
 
-	// console.log(firstCardsSetId)
+	useEffect(() => {
+		if (match && firstCardsSetId) {
+			navigate(`/${firstCardsSetId}`, {replace: true})
+		}
+	}, []) 
+
+	const description = <span>Нажмите 'Создать', <br /> чтобы создать набор карточек</span>
 
 	const onCollapse = () => {
 		setCollapsed(prev => !prev)
 	};
-
-	useEffect(() => {
-		if (firstCardsSetId !== undefined) {
-			console.log('first')
-			navigate(`/${firstCardsSetId}`)	
-		} else {
-			console.log('welcom')
-			navigate('/welcome')
-		}
-
-	}, [])
-
-	useEffect(() => {
-		if (lastCardsSetId !== undefined) {
-			console.log('last')
-			navigate(`/${lastCardsSetId}`)
-		} 
-
-	}, [lastCardsSetId])
 
 	return (
 		<Layout hasSider>
@@ -58,7 +50,8 @@ export const MainLayout = () => {
 			<Layout className={classes.content} >
 				<SimpleBar style={{ maxHeight: '100vh' }}>
 					<div className={classes.wrapper}>
-						<Outlet />
+						{!firstCardsSetId && <CardsSetEmpty description={description}/>}
+							<Outlet />
 					</div>
 				</SimpleBar>
 			</Layout>

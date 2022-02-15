@@ -1,20 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
+import classes from './TableSearchDropdown.module.css'
+
 import {Space, Input, Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import classes from './TableSearchDropdown.module.css'
-import { useRef } from 'react';
 
 
-export const TableSearchDropdown = ({ setSelectedKeys, selectedKeys, confirm, clearFilters, isSearchVisible }) => {
+
+export const TableSearchDropdown = ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
 	const [searchText, setSearchText] = useState('')
 	const searchRef = useRef(null)
 
 	useEffect(() => {
-		if (isSearchVisible) {
 			setTimeout(() => searchRef.current.select(), 100);
-		}
-
-	}, [isSearchVisible])
+	}, [])
 
 	const handleSearch = () => {
 		confirm()
@@ -32,8 +30,9 @@ export const TableSearchDropdown = ({ setSelectedKeys, selectedKeys, confirm, cl
 	};
 
 	const onChange = (event) => {
-		setSelectedKeys(event.target.value ? [event.target.value] : [])
-		setSearchText(event.target.value)
+		const value = event.target.value
+		setSelectedKeys( value ? [value] : [])
+		setSearchText(value)
 	}
 
 	return (

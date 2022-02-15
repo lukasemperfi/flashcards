@@ -1,17 +1,37 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import classes from './CardsSetAdd.module.css'
 import { ModalForm } from '../UI/ModalForm/ModalForm';
 
+import { useSelector } from 'react-redux'
+import { selectLastCardsSetId } from '../../store/selectors'
+
+import { useNavigate } from 'react-router-dom';
+
+
 export const CardsSetAdd = ({ showBtn, addCardsSet }) => {
+	const navigate = useNavigate()
+
 	const [modalForm, setModalForm] = useState(false)
 	const [title, setTitle] = useState('')
+	const [isAdded, setIsAdded] = useState(false)
 
+	const lastCardsSetId = useSelector(selectLastCardsSetId)
+
+
+	useEffect(() => {
+		if(isAdded) {
+			navigate(`/${lastCardsSetId}`)
+			setIsAdded(false)
+		}
+	}, [isAdded])
 
 	const showModalForm = () => {
 		setModalForm(prev => !prev)
 	}
 
-	const canselClick = () => {
+
+	const cancelClick = () => {
 		setModalForm(false)
 		setTitle('')
 	}
@@ -22,6 +42,7 @@ export const CardsSetAdd = ({ showBtn, addCardsSet }) => {
 			addCardsSet(title)
 			setModalForm(false)
 			setTitle('')
+			setIsAdded(true)
 		}
 
 	}
@@ -38,7 +59,7 @@ export const CardsSetAdd = ({ showBtn, addCardsSet }) => {
 			<ModalForm
 				visible={modalForm}
 				setVisible={setModalForm}
-				canselClick={canselClick}
+				canсelClick={cancelClick}
 				confirmClick={confirmClick}
 				cancelText='Отменить'
 				confirmText='Создать'

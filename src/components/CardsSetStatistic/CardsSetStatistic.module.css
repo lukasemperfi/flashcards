@@ -10,12 +10,19 @@
 	margin-bottom: 10px;
 }
 
+.statisticTitleWrapper {
+	overflow: hidden;
+}
+
 .statisticTitle {
 	color: rgba(0,0,0,.85);
     font-weight: 600;
     font-size: 38px;
     line-height: 1.23;
 	margin: 0 0 10px 0;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+	overflow: hidden
 }
 
 .statisticResult {

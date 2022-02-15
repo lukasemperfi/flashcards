@@ -1,56 +1,103 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import classes from './CardsSetIdPage.module.css'
-import { Layout, Progress, Menu, Typography, Button, Input, Dropdown } from 'antd';
+
+import { Layout, Menu, Button, Dropdown, message } from 'antd';
 import { MoreOutlined } from '@ant-design/icons';
+
 import { CardsSetTable } from '../../components/CardsSetTable/CardsSetTable';
-import { CardIdPage } from '../CardIdPage/CardIdPage';
 import { CardsSetStatistic } from '../../components/CardsSetStatistic/CardsSetStatistic';
 import { NewCard } from '../../components/NewCard/NewCard';
-import { Quiz } from '../../components/Quiz/Quiz';
+import { NotFound } from '../NotFound/NotFound';
+
+import { useFirstCardsSetIdAfterDelete } from './useCardsSetId';
+import { getCardsDoneNumber } from '../../utils/tableHelpers';
+
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectCardSetById } from '../../store/selectors';
-import { nanoid } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux';
-import { deleteSet, deleteCardsFromSet, addSetFromCardsList } from '../../store/cardSetsSlice';
-import { TestEditor } from '../../components/TestEditor';
-import { TestTable } from '../../components/TestTable';
-import { getProgressPercent } from '../../utils/tableHelpers';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCardSetById, selectIsCardsSetExist } from '../../store/selectors';
+import { deleteSet, renameSet } from '../../store/cardSetsSlice';
+import { useEffect } from 'react';
+import { ModalForm } from '../../components/UI/ModalForm/ModalForm';
+
 const { Header, Content } = Layout;
-const { Title } = Typography;
-const { Search } = Input;
+
 
 
 export const CardsSetIdPage = () => {
 	const { pathname } = useLocation()
-	const { cardSetId } = useParams()
-	const { title = '', cards = [] } = useSelector(state => selectCardSetById(state, cardSetId))
-	const [viewDeleteMessage, setViewDeleteMessage] = useState(false)
-	const [isCreateCardOpen, setIsCreateCardOpen] = useState(false)
 	const navigate = useNavigate()
+	const { cardSetId } = useParams()
+
 	const dispatch = useDispatch()
+	const isCardsSetExist = useSelector((state) => selectIsCardsSetExist(state, cardSetId))
+	const { title = '', cards = [] } = useSelector(state => selectCardSetById(state, cardSetId)) || {}
 
-console.log(cardSetId)
+	const [isCreateCardOpen, setIsCreateCardOpen] = useState(false)
+	const [isModalFormVisible, setIsModalFormVisible] = useState(false)
+	const [newTitle, setNewTitle] = useState('')
 
-	const cardsDone = cards && cards.filter(card => {
-		const progress = getProgressPercent(card?.statistics?.correct, card?.statistics?.repeat)
-		return progress > 65
-	}).length
+	const firstCardsSetIdAfterDelete = useFirstCardsSetIdAfterDelete(cardSetId)
 
-	const onStartClick = () => {
-		navigate('/quiz', { state: { pathFrom: pathname, cards, kitId: cardSetId } })
+	useEffect(() => {
+		if (isCreateCardOpen) {
+			setIsCreateCardOpen(false)
+		}
+	}, [cardSetId])
+
+	const onStartQuizClick = () => {
+		navigate('/quiz',
+			{
+				state:
+				{
+					pathFrom: pathname,
+					cards,
+					kitId: cardSetId
+				}
+			})
 	}
 
+	const onCancelModalClick = () => {
+		setIsModalFormVisible(false)
+	}
+
+	const onConfirmModalClick = (event) => {
+		event.preventDefault()
+		if (newTitle) {
+			dispatch(renameSet({ kitId: cardSetId, newTitle }))
+			setIsModalFormVisible(false)
+			setNewTitle('')
+		}
+	}
+
+	const onModalChange = (event) => {
+		setNewTitle(event.target.value)
+	}
+
+	const success = () => {
+		message.success('Набор удалён')
+	}
 
 	const dropdownMenuHandler = ({ key }) => {
-		if (key === 'deleteSet') {
-			dispatch(deleteSet({ id: cardSetId }))
-			setViewDeleteMessage(true)
+		switch (key) {
+			case 'deleteSet':
+				dispatch(deleteSet({ id: cardSetId }))
+				navigate(`/${firstCardsSetIdAfterDelete}`)
+				success()
+				break;
+			case 'renameSet':
+				setIsModalFormVisible(true)
+				break;
+			default:
+				break;
 		}
 	}
 
 	const menu = (
 		<Menu onClick={dropdownMenuHandler}>
+			<Menu.Item key='renameSet'>
+				Переименовать набор
+			</Menu.Item>
 			<Menu.Item key='deleteSet'>
 				Удалить набор
 			</Menu.Item>
@@ -60,25 +107,38 @@ console.log(cardSetId)
 
 	return (
 		<>
-			{viewDeleteMessage && <div>Набор удалён</div>}
-			{(!cards.length && !viewDeleteMessage) && <div>Страница не найдена</div>}
-			{(!!cards.length) &&
+			{isCardsSetExist
+				?
 				(<>
 					<Header className={classes.header}>
 						<CardsSetStatistic
 							title={title}
 							cardsNumber={cards.length}
-							cardsDone={cardsDone}
-							onClick={onStartClick}
+							cardsDone={getCardsDoneNumber(cards)}
+							onClick={onStartQuizClick}
 						/>
-						<Dropdown overlay={menu} placement="bottomRight" trigger={['click']}>
+						<Dropdown
+							overlay={menu}
+							placement="bottomRight"
+							trigger={['click']}
+						>
 							<Button
 								type='text'
 								className={classes.moreBtn}
 								icon={<MoreOutlined />}
 							/>
 						</Dropdown>
-
+						<ModalForm
+							visible={isModalFormVisible}
+							width={300}
+							position={{ top: 20, right: 60 }}
+							canсelClick={onCancelModalClick}
+							confirmClick={onConfirmModalClick}
+							cancelText='Отменить'
+							confirmText='Сохранить'
+							inputOnChange={onModalChange}
+							inputValue={newTitle}
+						/>
 					</Header>
 					<Content className={classes.content}>
 						{isCreateCardOpen
@@ -97,8 +157,9 @@ console.log(cardSetId)
 						}
 					</Content>
 				</>)
-
+				:
+				<NotFound />
 			}
 		</>
-	);
-};
+	)
+}

@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button } from 'antd';
 import classes from './CollapsedInput.module.css'
 import cn from 'classnames'
 
+import { Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+
 import { CSSTransition } from 'react-transition-group';
 
 
@@ -59,7 +60,6 @@ export const CollapsedInput = ({ collapsed, inputOnChange, inputValue }) => {
 			<Button
 				onClick={showSearch}
 				className={cn(classes.searchBtn, {
-					// [classes.showSearchBtn]: isSearchVisible,
 				})}
 				icon={<SearchOutlined className={classes.searchIcon} />}
 			/>

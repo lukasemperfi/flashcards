@@ -1,0 +1,35 @@
+.link {
+	text-decoration: none;
+	line-height: 1.5715;
+    position: relative;
+    display: inline-block;
+    font-weight: 400;
+    white-space: nowrap;
+    text-align: center;
+    background-image: none;
+    cursor: pointer;
+    transition: all .3s cubic-bezier(.645,.045,.355,1);
+    user-select: none;
+    touch-action: manipulation;
+    height: 32px;
+    padding: 4px 15px;
+    font-size: 14px;
+    border-radius: 2px;
+    color: #fff;
+	text-shadow: 0 -1px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 2px #0000000b;
+    background-color: rgb(24, 144, 255);
+	border: 0;
+}
+
+.link:hover, .link:focus {
+    color: #fff;
+    border-color: #40a9ff;
+    background: #40a9ff;
+}
+
+.link:active {
+    color: #fff;
+    border-color: #096dd9;
+    background: #096dd9;
+}

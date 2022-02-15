@@ -1,43 +1,47 @@
 import React from 'react';
 import classes from './CardsSetTableOptionsBar.module.css'
-import { Button, Space, Input, Dropdown } from 'antd';
-import { ModalForm } from '../UI/ModalForm/ModalForm';
+
 import { CardsSetAdd } from '../CardsSetAdd/CardsSetAdd';
 
+import { Button, Space } from 'antd';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { addSetFromCardsList } from '../../store/cardSetsSlice';
+import { selectCardsById } from '../../store/selectors';
 
 
-const { Search } = Input;
+export const CardsSetTableOptionsBar = ({clearAllFilters, selectedRowKeys, setIsCreateCardOpen, cardSetId }) => {
+	const dispatch = useDispatch()
+	const selectedCards = useSelector(state => selectCardsById(state, cardSetId, selectedRowKeys))
 
-export const CardsSetTableOptionsBar = ({ disabledBtn, addCards, deleteCards, createNewCard, clearFilters }) => {
+	const addCardsKitFromCardsList = (title) => {
+		dispatch(addSetFromCardsList({ title, cardSetId, cards: selectedCards }))
+	}
 
+	const showNewCard = () => {
+		setIsCreateCardOpen(true)
+	}
+
+const showBtn = <Button type="primary" disabled={selectedRowKeys.length === 0} >Создать список</Button>
 
 	return (
 		<div className={classes.nav}>
 			<Space className={classes.space} size={[8, 16]} wrap>
-
-				{/* <Input placeholder="Поиск по имени" allowClear style={{ width: 250 }} /> */}
 				<Button
 					type="primary"
-					onClick={createNewCard}
+					onClick={showNewCard}
 				>
 					Создать карточку
 				</Button>
 				<CardsSetAdd
-					showBtn={<Button type="primary" disabled={disabledBtn} >Создать список</Button>}
-					addCardsSet={addCards}
+					showBtn={showBtn}
+					addCardsSet={addCardsKitFromCardsList}
 				/>
 				<Button
-					onClick={clearFilters}
+					onClick={clearAllFilters}
 				>
 					Очистить все фильтры
 				</Button>
-				{/* <Button
-					type="primary"
-					disabled={disabledBtn}
-					onClick={deleteCards}
-				>
-					Удалить
-				</Button> */}
 			</Space>
 		</div>
 	);

@@ -1,8 +1,9 @@
 import React from 'react'
-import { Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons'
 import classes from './CollapsedButton.module.css'
 import cn from 'classnames'
+
+import { Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons'
 
 
 export const CollapsedButton = ({ collapsed, onClick }) => {

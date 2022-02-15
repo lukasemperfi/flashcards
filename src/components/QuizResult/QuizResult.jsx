@@ -1,14 +1,14 @@
 import React from 'react';
-import { Progress } from 'antd';
 import classes from './QuizResult.module.css';
-import { progressBarColor } from '../../utils/progressBarColor';
-import { getProgressPercent } from '../../utils/tableHelpers';
+
+import { Progress } from 'antd';
+
+import { getProgressBarColor, getProgressPercent } from '../../utils/tableHelpers';
 
 
-
-export const QuizResult = ({result}) => {
-	const {correct, notCorrect} = result
-	const percent = getProgressPercent(correct, (correct + notCorrect))
+export const QuizResult = ({ result }) => {
+	const { correct, notCorrect } = result
+	const progressPercent = getProgressPercent(correct, (correct + notCorrect))
 
 	return (
 		<div className={classes.result}>
@@ -25,7 +25,12 @@ export const QuizResult = ({result}) => {
 						<span>{`Не знаю: ${notCorrect}`}</span>
 					</div>
 				</div>
-				<Progress type="circle" percent={percent} width={80} strokeColor={progressBarColor(percent)} /> 
+				<Progress
+					type="circle"
+					percent={progressPercent}
+					width={80}
+					strokeColor={getProgressBarColor(progressPercent)}
+				/>
 			</div>
 		</div>
 	);

@@ -1,184 +1,70 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Tag, Space, Progress, Input, Button, message } from 'antd';
-import { Link } from 'react-router-dom';
-import { SearchOutlined } from '@ant-design/icons';
-import { progressBarColor } from '../../utils/progressBarColor';
-import { deleteSet, deleteCardsFromSet, addSetFromCardsList } from '../../store/cardSetsSlice';
+import React, { useEffect, useRef } from 'react';
+
 import { CardsSetTableOptionsBar } from '../CardsSetTableOptionsBar/CardsSetTableOptionsBar';
-import { useRef } from 'react';
-import parse from 'html-react-parser';
-import { TableSearchDropdown } from './TableSearchDropdown/TableSearchDropdown';
-import { useCallback } from 'react';
-import { useMemo } from 'react';
-import { getProgressPercent } from '../../utils/tableHelpers';
+import { getTableData } from '../../utils/tableHelpers';
 
+import { Table } from 'antd';
 
+import { useTableFilters } from './useTableFilters';
+import { columnsProgressBar, columnsProgressFilterDropdown, columnsSearchFilterDropdown, columnsSearchFilterElements, columnsSearchFilterIcon } from './tableRenderElements';
+import { Link } from 'react-router-dom';
 
+const data = [];
+for (let i = 0; i < 100; i++) {
+  data.push({
+    key: i,
+    name: `Edward King ${i}`,
+    age: 32,
+    address: `London, Park Lane no. ${i}`,
+  });
+}
 
-export const CardsSetTable = ({ cards, dispatch, setIsCreateCardOpen, cardSetId }) => {
-	const [selectedCards, setSelectedCards] = useState([])
+export const CardsSetTable = ({ cards, setIsCreateCardOpen, cardSetId }) => {
+	const tableRef = useRef(null)
+	const tableData = getTableData(cards)
+	const {
+		filters,
+		columnsFilters, 
+		rowFilters,
+		rowSelectionFilters, 
+		paginationFilters, 
+		onChangeTable, 
+		clearAllFilters
+	} = useTableFilters(cardSetId, cards)
 
-	// const [selectedRowKeys, setSelectedRowKeys] = useState([])
-	// const [paginationPage, setPaginationPage] = useState(1)
-	// const [filteredInfo, setFilteredInfo] = useState(null)
-	// const [sortedInfo, setSortedInfo] = useState(null)
-
-	const [filters, setFilters] = useState({
-		selectedRowKeys: [],
-		filteredInfo: null,
-		sortedInfo: null,
-		paginationPage: 1,
-	})
-
+	const {searchFilter, sortFilter, progressFilter} = columnsFilters
+	const { selectAllRows, clearAllRows, deleteCardsFromCardsKit} = rowSelectionFilters
 
 
 	useEffect(() => {
-
-		clearAll()
+		clearAllFilters()
 	}, [cardSetId])
-
-	const isFiltersActive = () => {
-		console.log('render func')
-		const { selectedRowKeys, filteredInfo, sortedInfo, paginationPage } = filters
-		const isFilteredActive = filteredInfo !== null && Object.values(filteredInfo).some(filter => filter !== null)
-		const isSortedActive = sortedInfo !== null && sortedInfo.column !== undefined
-		if (selectedRowKeys.length > 0 || isFilteredActive || isSortedActive || paginationPage > 1) {
-			return true
-		}
-		return false
-	}
-
-	const clearAll = () => {
-		if (isFiltersActive()) {
-			setFilters({
-				selectedRowKeys: [],
-				filteredInfo: null,
-				sortedInfo: null,
-				paginationPage: 1,
-			})
-		}
-	}
-
-	console.log(filters)
-	const [isSearchVisible, setIsSearchVisible] = useState(false)
-	const tableRef = useRef(null)
-
-
-	const tableData = useMemo(() => {
-		return cards.map(card => {
-			const progress = getProgressPercent(card?.statistics?.correct, card?.statistics?.repeat)
-			return { ...card, key: card.id, statistics: { ...card?.statistics, progress } }
-		})
-	}, [cards])
-
-	console.log(tableData);
-
-
-	const columnsLink = (text, record) => <Link to={`/${cardSetId}/${record.id}`}>{text}</Link>
-	const columnsSortNumberFilter = (a, b) => a.statistics.repeat - b.statistics.repeat
-	const columnsProgressBar = (percent) => <Progress percent={+percent} steps={10} strokeColor={progressBarColor(+percent)} />
-	const columnsProgressFilterDropdownOptions = [
-		{
-			text: 'Плохо',
-			value: 'bad',
-		},
-		{
-			text: 'Хорошо',
-			value: 'good',
-		},
-		{
-			text: 'Отлично',
-			value: 'excellent',
-		},
-	]
-	const columnsProfressFilter = (value, record) => {
-		const progress = record.statistics.progress
-		if (value === 'bad') {
-			return progress < 50
-		}
-		if (value === 'good') {
-			return (progress > 49 && progress < 66)
-		}
-		if (value === 'excellent') {
-			return progress > 65
-		}
-	}
-	const columnsSearchFilterIcon = filtered => <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
-	const columnsSearchFilterDropdown = ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
-		return <TableSearchDropdown
-			setSelectedKeys={setSelectedKeys}
-			selectedKeys={selectedKeys}
-			confirm={confirm}
-			clearFilters={clearFilters}
-			isSearchVisible={isSearchVisible}
-		/>
-	}
-	const columnsSearchFilter = (value, record) => record?.question.toString().toLowerCase().includes(value.toLowerCase())
-
-
-	const onChangeRow = (selectedRowKeys, selectedRows) => {
-		setSelectedCards(selectedRows)
-		setFilters({ ...filters, selectedRowKeys })
-	}
-
 
 
 	const rowSelection = {
-		selectedRowKeys: filters.selectedRowKeys,
-		onChange: onChangeRow,
+		...rowFilters,
 		selections: [
 			{
 				key: 'allData',
 				text: 'Выбрать все',
-				onSelect: () => {
-					setFilters({ ...filters, selectedRowKeys: tableData.map(row => row.key) })
-				},
+				onSelect: selectAllRows,
 			},
 			{
 				key: 'clearData',
 				text: 'Снять выделение',
-				onSelect: () => {
-					setFilters({ ...filters, selectedRowKeys: [] })
-				},
+				onSelect: clearAllRows,
 			},
 			{
 				key: 'deleteChecked',
 				text: 'Удалить выбранные',
-				onSelect: () => {
-					deleteCardsFromCardsKit()
-				}
+				onSelect: deleteCardsFromCardsKit,
 			},
-		]
+		],
 	};
 
-	const handleChange = (pagination, tableFilters, sorter) => {
-		setFilters({ ...filters, filteredInfo: tableFilters, sortedInfo: sorter })
-	}
-
-
-
-
-	const addCardsKitFromCardsList = (title) => {
-		dispatch(addSetFromCardsList({ title, cards: selectedCards }))
-		// setSelectedRowKeys([])
-		setFilters({ ...filters, selectedRowKeys: [] })
-	}
-
-	const success = () => {
-		message.success('Карточки успешно удалены');
-	  };
-
-	const deleteCardsFromCardsKit = () => {
-		if (filters.selectedRowKeys.length > 0) {
-			dispatch(deleteCardsFromSet({ kitId: cardSetId, cardsId: filters.selectedRowKeys }))
-			// setSelectedRowKeys([])
-			setFilters({ ...filters, selectedRowKeys: [] })
-			success()
-		}
-	}
-
-	const createNewCard = () => {
-		setIsCreateCardOpen(true)
+	const pagination = {
+		position: ['bottomCenter'],
+		...paginationFilters
 	}
 
 	const columns = [
@@ -186,12 +72,10 @@ export const CardsSetTable = ({ cards, dispatch, setIsCreateCardOpen, cardSetId 
 			title: 'Имя карточки',
 			dataIndex: 'question',
 			key: 'question',
-			filteredValue: filters.filteredInfo?.question || null,
+			...searchFilter,
 			filterDropdown: columnsSearchFilterDropdown,
-			onFilter: columnsSearchFilter,
-			onFilterDropdownVisibleChange: setIsSearchVisible,
 			filterIcon: columnsSearchFilterIcon,
-			render: columnsLink,
+			render:  (text, record) => <Link to={`/${cardSetId}/${record.id}`}>{text}</Link>,
 			ellipsis: true,
 		},
 		{
@@ -200,8 +84,7 @@ export const CardsSetTable = ({ cards, dispatch, setIsCreateCardOpen, cardSetId 
 			key: 'repeat',
 			align: 'center',
 			width: '90px',
-			sortOrder: filters.sortedInfo?.columnKey === 'repeat' && filters.sortedInfo.order,
-			sorter: columnsSortNumberFilter,
+			...sortFilter,
 			ellipsis: true,
 		},
 		{
@@ -226,39 +109,31 @@ export const CardsSetTable = ({ cards, dispatch, setIsCreateCardOpen, cardSetId 
 			key: 'progress',
 			align: 'center',
 			width: 230,
+			...progressFilter,
+			...columnsProgressFilterDropdown,
 			render: columnsProgressBar,
-			filteredValue: filters.filteredInfo?.progress || null,
-			filters: columnsProgressFilterDropdownOptions,
-			onFilter: columnsProfressFilter,
 			ellipsis: true,
 		},
 	];
 
+	
 	return (
 		<>
 			<CardsSetTableOptionsBar
-				disabledBtn={filters?.selectedRowKeys.length === 0}
-				addCards={addCardsKitFromCardsList}
-				deleteCards={deleteCardsFromCardsKit}
+				selectedRowKeys={filters.selectedRowKeys}
+				clearAllFilters={clearAllFilters}
+				cardSetId={cardSetId}
 				setIsCreateCardOpen={setIsCreateCardOpen}
-				clearFilters={clearAll}
-				createNewCard={createNewCard}
 			/>
 			<div ref={tableRef} style={{ position: 'relative' }}>
 				<Table
-					rowSelection={{
-						...rowSelection,
-					}}
+					rowSelection={rowSelection}
 					columns={columns}
 					dataSource={tableData}
 					size='small'
 					scroll={{ x: 615 }}
-					onChange={handleChange}
-					pagination={{
-						position: ['bottomCenter'],
-						current: filters.paginationPage,
-						onChange: (page, pageSize) => setFilters({ ...filters, paginationPage: page }),
-					}}
+					onChange={onChangeTable}
+					pagination={pagination}
 					getPopupContainer={() => tableRef.current}
 				/>
 			</div>

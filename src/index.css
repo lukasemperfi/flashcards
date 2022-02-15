@@ -25,10 +25,12 @@ body {
 	max-width: 770px;
 }
 
+/* custom scrollbar */
 .simplebar-scrollbar::before {
 	background-color: #b3b3b4;
 }
 
+/* ck5-editor */
 .ck-blurred.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline {
 	outline: none;
 	padding: 20px;
@@ -54,7 +56,6 @@ body {
 	font-size: 16px;
 	line-height: 1.5;
 	box-shadow: #40a9ff 0px 0px 7px 2px;
-	/* box-shadow: #40a9ff 0px 2px 5px -1px, #40a9ff 0px 1px 3px -1px; */
 	font-family: Roboto, sans-serif;
 	border-radius: 6px;
 	transition: box-shadow .3s;
@@ -65,9 +66,6 @@ body {
 .editor-custom .ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused ul {
 	margin-bottom: 16px;
 }
-
-
-
 
 .editor-custom .ck.ck-editor__editable_inline>:first-child {
 	font-size: 30px;
@@ -80,22 +78,3 @@ border-radius: 6px;
 	box-shadow: rgb(50 50 93 / 25%) 0px 2px 5px -1px, rgb(0 0 0 / 30%) 0px 1px 3px -1px;
 
 }
-
-
-/* .ck-editor__main {
-	  font-family: Roboto, sans-serif;
-}
-
-/* .ck.ck-editor__editable > .ck-placeholder::before {
-  
-} */
-
-/* .ck.ck-editor__editable_inline>:first-child {
-	border-bottom: 1px solid #b3b3b4;
-	font-size: 30px;
-    font-weight: 700;
-}
-
-.ck-content .page-break__label {
-	color: rgb(145, 145, 145);
-}  */

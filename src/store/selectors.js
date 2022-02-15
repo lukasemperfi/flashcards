@@ -1,12 +1,9 @@
-import { createSelector } from "@reduxjs/toolkit";
-const defaultCardSet = {}
-
-
 export const selectAll = state => state.cardSets
 
 export const selectCardSets = state => selectAll(state).cardSets
 
 export const selectFirstCardsSetId = state => selectCardSets(state)[0]?.id
+export const selectSecondCardsSetId = state => selectCardSets(state)[1]?.id
 
 export const selectLastCardsSetId = state => {
 	const cardSets = selectCardSets(state)
@@ -14,16 +11,20 @@ export const selectLastCardsSetId = state => {
 }
 
 export const selectSearchedCardSets = (state, query) => {
-	// console.log('rendered CardSets selector')
 	return selectCardSets(state).filter(cardSet => cardSet.title.toLowerCase().includes(query.toLowerCase()))
 }
 
 export const selectCardSetById = (state, id) => {
-	// console.log('rendered cardSetId selector')
-	return selectCardSets(state).find(cardSet => cardSet.id === id) || defaultCardSet
+	return selectCardSets(state).find(cardSet => cardSet.id === id)
 }
 
 export const selectCardById = (state, kitId, cardId) => {
 	return selectCardSetById(state, kitId)?.cards.find(card => card.id === cardId)
 }
 
+export const selectIsCardsSetExist = (state, cardSetId) => selectCardSetById(state, cardSetId) !== undefined
+
+export const selectCardsById = (state, cardSetId, cardsId) => {
+	const cards = selectCardSetById(state, cardSetId).cards
+	return cards.filter(card => cardsId.some(id => card.id === id))
+}
