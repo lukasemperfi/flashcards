@@ -35,7 +35,7 @@ export const CardsSetIdPage = () => {
 
 	const [isCreateCardOpen, setIsCreateCardOpen] = useState(false)
 	const [isModalFormVisible, setIsModalFormVisible] = useState(false)
-	const [newTitle, setNewTitle] = useState('')
+	const [newTitle, setNewTitle] = useState(title)
 
 	const firstCardsSetIdAfterDelete = useFirstCardsSetIdAfterDelete(cardSetId)
 

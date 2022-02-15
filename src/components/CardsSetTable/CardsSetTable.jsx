@@ -9,15 +9,7 @@ import { useTableFilters } from './useTableFilters';
 import { columnsProgressBar, columnsProgressFilterDropdown, columnsSearchFilterDropdown, columnsSearchFilterElements, columnsSearchFilterIcon } from './tableRenderElements';
 import { Link } from 'react-router-dom';
 
-const data = [];
-for (let i = 0; i < 100; i++) {
-  data.push({
-    key: i,
-    name: `Edward King ${i}`,
-    age: 32,
-    address: `London, Park Lane no. ${i}`,
-  });
-}
+import parse from 'html-react-parser';
 
 export const CardsSetTable = ({ cards, setIsCreateCardOpen, cardSetId }) => {
 	const tableRef = useRef(null)
@@ -62,10 +54,7 @@ export const CardsSetTable = ({ cards, setIsCreateCardOpen, cardSetId }) => {
 		],
 	};
 
-	const pagination = {
-		position: ['bottomCenter'],
-		...paginationFilters
-	}
+
 
 	const columns = [
 		{
@@ -75,7 +64,7 @@ export const CardsSetTable = ({ cards, setIsCreateCardOpen, cardSetId }) => {
 			...searchFilter,
 			filterDropdown: columnsSearchFilterDropdown,
 			filterIcon: columnsSearchFilterIcon,
-			render:  (text, record) => <Link to={`/${cardSetId}/${record.id}`}>{text}</Link>,
+			render:  (text, record) => <Link to={`/${cardSetId}/${record.id}`}>{parse(text)}</Link>,
 			ellipsis: true,
 		},
 		{
@@ -115,7 +104,11 @@ export const CardsSetTable = ({ cards, setIsCreateCardOpen, cardSetId }) => {
 			ellipsis: true,
 		},
 	];
-
+	const paginationSettings = {
+		position: ['bottomCenter'],
+		current: filters.paginationPage,
+		...paginationFilters
+	}
 	
 	return (
 		<>
@@ -133,7 +126,7 @@ export const CardsSetTable = ({ cards, setIsCreateCardOpen, cardSetId }) => {
 					size='small'
 					scroll={{ x: 615 }}
 					onChange={onChangeTable}
-					pagination={pagination}
+					pagination={paginationSettings}
 					getPopupContainer={() => tableRef.current}
 				/>
 			</div>

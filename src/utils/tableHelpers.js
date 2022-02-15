@@ -13,8 +13,8 @@ export const getCardsDoneNumber = (cards) => {
 	}).length
 }
 
-export const isFiltersActive = (filters) => {
-	const { selectedRowKeys, filteredInfo, sortedInfo, paginationPage } = filters
+export const isFiltersActive = (filters, paginationPage) => {
+	const { selectedRowKeys, filteredInfo, sortedInfo } = filters
 	const isFilteredActive = filteredInfo !== null && Object.values(filteredInfo).some(filter => filter !== null)
 	const isSortedActive = sortedInfo !== null && sortedInfo.column !== undefined
 	if (selectedRowKeys.length > 0 || isFilteredActive || isSortedActive || paginationPage > 1) {

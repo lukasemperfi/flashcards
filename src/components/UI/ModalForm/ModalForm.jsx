@@ -23,7 +23,7 @@ export const ModalForm = (props) => {
 
 	useEffect(() => {
 		if (visible) {
-			setTimeout(() => inputRef.current.focus(), 100);
+			setTimeout(() => inputRef.current.select(), 100);
 		}
 	}, [visible])
 

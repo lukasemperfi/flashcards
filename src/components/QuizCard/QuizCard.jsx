@@ -7,9 +7,7 @@ import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
 import parse from 'html-react-parser';
 
-import hljs from 'highlight.js/lib/core';
-import javascript from 'highlight.js/lib/languages/javascript';
-hljs.registerLanguage('javascript', javascript);
+import hljs from 'highlight.js';
 
 
 export const QuizCard = ({ card, onCorrectNotCorrectBtnsClick }) => {

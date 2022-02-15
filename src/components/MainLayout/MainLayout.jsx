@@ -48,7 +48,7 @@ export const MainLayout = () => {
 				<Navbar collapsed={collapsed} />
 			</Sider>
 			<Layout className={classes.content} >
-				<SimpleBar style={{ maxHeight: '100vh' }}>
+				<SimpleBar style={{ height: '100vh' }}>
 					<div className={classes.wrapper}>
 						{!firstCardsSetId && <CardsSetEmpty description={description}/>}
 							<Outlet />

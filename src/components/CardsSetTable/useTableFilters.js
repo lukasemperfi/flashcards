@@ -13,10 +13,10 @@ export const useTableFilters = (cardSetId, cards) => {
 		selectedRowKeys: [],
 		filteredInfo: null,
 		sortedInfo: null,
-		paginationPage: 1,
 	})
-	const dispatch = useDispatch()
+	const [paginationPage, setPaginationPage] = useState(1)
 
+	const dispatch = useDispatch()
 
 	// Search Filter
 	const columnsSearchFilter = (value, record) => record?.question.toString().toLowerCase().includes(value.toLowerCase())
@@ -51,8 +51,10 @@ export const useTableFilters = (cardSetId, cards) => {
 	}
 
 	// pafination Filter
-	const onChangePagination = (page, pageSize) => setFilters({ ...filters, paginationPage: page })
-	const current = filters.paginationPage
+	const current = paginationPage
+	const onChangePagination = (page, pageSize) => {
+		setPaginationPage(page)
+	}
 
 	// rowFilters
 	const selectedRowKeysFilter = filters.selectedRowKeys
@@ -76,13 +78,13 @@ export const useTableFilters = (cardSetId, cards) => {
 	}
 
 	const clearAllFilters = () => {
-		if (isFiltersActive(filters)) {
+		if (isFiltersActive(filters, paginationPage)) {
 			setFilters({
 				selectedRowKeys: [],
 				filteredInfo: null,
 				sortedInfo: null,
-				paginationPage: 1,
 			})
+			setPaginationPage(1)
 		}
 	}
 
@@ -116,6 +118,7 @@ export const useTableFilters = (cardSetId, cards) => {
 		paginationFilters,
 		onChangeTable,
 		clearAllFilters,
+		setFilters,
 	}
 
 } 

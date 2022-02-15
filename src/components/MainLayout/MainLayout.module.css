@@ -1,11 +1,11 @@
 
 .sidebar {
-	max-height: 100vh;
+	/* max-height: 100vh; */
 }
 
-.content {
+/* .content {
 	min-height: 100vh; 
-}
+} */
 
 .wrapper {
 	padding: 20px;
