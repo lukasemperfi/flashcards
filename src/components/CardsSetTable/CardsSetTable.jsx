@@ -54,8 +54,6 @@ export const CardsSetTable = ({ cards, setIsCreateCardOpen, cardSetId }) => {
 		],
 	};
 
-
-
 	const columns = [
 		{
 			title: 'Имя карточки',
@@ -124,7 +122,7 @@ export const CardsSetTable = ({ cards, setIsCreateCardOpen, cardSetId }) => {
 					columns={columns}
 					dataSource={tableData}
 					size='small'
-					scroll={{ x: 615 }}
+					scroll={{ x: 590 }}
 					onChange={onChangeTable}
 					pagination={paginationSettings}
 					getPopupContainer={() => tableRef.current}

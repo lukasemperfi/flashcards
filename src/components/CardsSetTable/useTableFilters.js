@@ -4,7 +4,9 @@ import { useState } from "react"
 import { success } from "./tableRenderElements"
 
 import { deleteCardsFromSet } from '../../store/cardSetsSlice';
-import { useDispatch } from "react-redux";
+import { selectCardsById } from '../../store/selectors';
+import { useDispatch, useSelector } from "react-redux";
+
 import { getTableData, isFiltersActive } from "../../utils/tableHelpers";
 
 
@@ -17,7 +19,7 @@ export const useTableFilters = (cardSetId, cards) => {
 	const [paginationPage, setPaginationPage] = useState(1)
 
 	const dispatch = useDispatch()
-
+	
 	// Search Filter
 	const columnsSearchFilter = (value, record) => record?.question.toString().toLowerCase().includes(value.toLowerCase())
 	const searchFilter = {
@@ -71,6 +73,7 @@ export const useTableFilters = (cardSetId, cards) => {
 			success()
 		}
 	}
+
 
 
 	const onChangeTable = (pagination, tableFilters, sorter) => {

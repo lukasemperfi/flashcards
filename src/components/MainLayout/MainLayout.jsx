@@ -35,9 +35,11 @@ export const MainLayout = () => {
 		setCollapsed(prev => !prev)
 	};
 
+
 	return (
 		<Layout hasSider>
 			<Sider
+				breakpoint="lg"
 				className={classes.sidebar}
 				collapsedWidth={60}
 				collapsible

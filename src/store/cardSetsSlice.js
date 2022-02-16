@@ -1,6 +1,6 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit'
+import { initialValue } from './initialValue'
 
-const initialValue = []
 
 const cardSetsSlice = createSlice({
 	name: 'cardSets',
