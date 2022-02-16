@@ -6,7 +6,7 @@ import { getTableData } from '../../utils/tableHelpers';
 import { Table } from 'antd';
 
 import { useTableFilters } from './useTableFilters';
-import { columnsProgressBar, columnsProgressFilterDropdown, columnsSearchFilterDropdown, columnsSearchFilterElements, columnsSearchFilterIcon } from './tableRenderElements';
+import { columnsProgressBar, columnsProgressFilterDropdown, columnsSearchFilterDropdown, columnsSearchFilterIcon } from './tableRenderElements';
 import { Link } from 'react-router-dom';
 
 import parse from 'html-react-parser';

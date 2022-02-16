@@ -4,8 +4,7 @@ import { useState } from "react"
 import { success } from "./tableRenderElements"
 
 import { deleteCardsFromSet } from '../../store/cardSetsSlice';
-import { selectCardsById } from '../../store/selectors';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { getTableData, isFiltersActive } from "../../utils/tableHelpers";
 
