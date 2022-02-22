@@ -27,7 +27,7 @@ export const MainLayout = () => {
 		if (match && firstCardsSetId) {
 			navigate(`/${firstCardsSetId}`, {replace: true})
 		}
-	}, []) 
+	}, [match]) 
 
 	const description = <span>Нажмите 'Создать', <br /> чтобы создать набор карточек</span>
 
